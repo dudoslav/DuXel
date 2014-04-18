@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <Compiler Value="D:\Programs\lazarus\fpc\2.6.2\bin\x86_64-win64\fpc.exe" Date="1131445527"/>
+  <Params Value=" -MObjFPC -Scghi -O1 -g -gl -WG -vewnhi -FiD:\Workspace\DuXel\lib\x86_64-win64 -FuD:\Programs\lazarus\lcl\units\x86_64-win64\win32 -FuD:\Programs\lazarus\lcl\units\x86_64-win64 -FuD:\Programs\lazarus\components\lazutils\lib\x86_64-win64 -FuD:\Programs\lazarus\packager\units\x86_64-win64 -FuD:\Workspace\DuXel\ -FUD:\Workspace\DuXel\lib\x86_64-win64\ -l -dLCL -dLCLwin32 project1.lpr"/>
+  <Complete Value="False"/>
+</CONFIG>
