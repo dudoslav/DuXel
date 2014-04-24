@@ -5,7 +5,7 @@ unit Unit2;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls, DudUnit;
 
 type
 
@@ -19,9 +19,9 @@ type
     Label2: TLabel;
     procedure Button1Click(Sender: TObject);
   private
-    { private declarations }
+    obr : TDudPic;
   public
-    { public declarations }
+    procedure Init(var argObr : TDudPic);
   end;
 
 var
@@ -33,9 +33,15 @@ implementation
 
 { TForm2 }
 
+procedure TForm2.Init(var argObr : TDudPic);
+begin
+obr := argObr;
+end;
+
 procedure TForm2.Button1Click(Sender: TObject);
 begin
-
+obr := TDudPic.Create(strtoint(Edit1.text),strtoint(Edit2.text));
+self.Destroy;
 end;
 
 end.

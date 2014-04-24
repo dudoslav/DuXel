@@ -6,21 +6,9 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, LCLType,
-  ExtCtrls, Menus, StdCtrls, Math, windows;
+  ExtCtrls, Menus, StdCtrls, Math, Windows, Unit2, DudUnit;
 
 type
-
-  TDudPic = class
-  private
-    pic: TPortableNetworkGraphic;
-    procedure fill(color : TColor);
-  public
-    constructor Create(Width,Height : integer);
-    function getPicPixel(x, y: integer): TColor;
-    procedure setPicPixel(x, y: integer; color : TColor);
-    function getPicWidth(): integer;
-    function getPicHeight(): integer;
-  end;
 
   { TForm1 }
 
@@ -34,6 +22,7 @@ type
     procedure FormResize(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
     procedure ScrollBar1Change(Sender: TObject);
+    procedure CreatePic(argWidth,argHeight : integer);
   private
     pixelA : integer;
   public
@@ -45,59 +34,7 @@ var
   obr: TDudPic;
 implementation
 
-procedure CreatePic(width,height : integer);
-begin
-  obr := TDuDPic.Create(width,height);
-  image1.width := width*pixelA;
-  image1.height := height*pixelA;
-  image1.Picture.Bitmap.SetSize(width*pixelA,height*pixelA);
-end;
-
 {$R *.lfm}
-
-{TDudPic Begin}
-
-constructor TDudPic.Create(Width,Height : integer);
-begin
-  pic:= TPortableNetworkGraphic.Create;
-  pic.Width:= Width;
-  pic.Height:= Height;
-
-  fill(clwhite);
-end;
-
-function TDudPic.getPicPixel(x, y: integer): TColor;
-begin
-  result := pic.Canvas.Pixels[x,y];
-end;
-
-procedure TDudPic.setPicPixel(x, y: integer; color: TColor);
-begin
-  pic.Canvas.Pixels[x,y] := color;
-end;
-
-function TDudPic.getPicWidth(): integer;
-begin
-  result := pic.Width;
-end;
-
-function TDudPic.getPicHeight(): integer;
-begin
-  result := pic.Height;
-end;
-
-procedure TDudPic.fill(color : TColor);
-var
-  i,j : integer;
-begin
-  for i := 0 to pic.Width do
-      for j := 0 to pic.Height do
-          begin
-             pic.Canvas.Pixels[i,j] := color;
-          end;
-end;
-
-{TDudPic End}
 
 {TForm1 Begin}
 
@@ -116,33 +53,47 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  //obr := TDudPic.Create(16,16);
+  obr := TDudPic.Create(16,16);
   pixelA := 60;
   //renderDudPic(obr);
 end;
 
 procedure TForm1.FormResize(Sender: TObject);
 begin
-  if(obr <> nil) and (obr.pic.Width*pixelA <= image1.width) then
+  if(obr <> nil) and (obr.getPicWidth()*pixelA <= image1.width) then
   scrollbar1.Visible := false else
     begin
     scrollbar1.Visible := true;
     scrollbar1.Width:= image1.Width;
     end;
 
-  if(obr <> nil) and (obr.pic.Height*pixelA <= image1.height) then
+  if(obr <> nil) and (obr.getPicHeight()*pixelA <= image1.height) then
   scrollbar2.Visible := false else
     begin
     scrollbar2.Visible := true;
     scrollbar2.height := image1.height;
     end;
 
-  renderDudPic(obr);
+  //renderDudPic(obr);
+end;
+
+procedure TForm1.CreatePic(argWidth,argHeight : integer);
+begin
+  obr := TDuDPic.Create(argwidth,argheight);
+  image1.width := argwidth*pixelA;
+  image1.height := argheight*pixelA;
+  image1.Picture.Bitmap.SetSize(width*pixelA,height*pixelA);
 end;
 
 procedure TForm1.MenuItem1Click(Sender: TObject);
+var
+  form2 : TForm2;
 begin
-  renderDudPic(obr);
+  //creatni okno
+  form2 := TForm2.Create(Self);
+  form2.Init(obr);
+  //okno.Visible:=true;
+  form2.Show;
 end;
 
 procedure TForm1.ScrollBar1Change(Sender: TObject);
