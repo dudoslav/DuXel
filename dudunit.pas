@@ -9,6 +9,8 @@ uses
 
 type
 
+  //TODO: dorob destructor
+
   TDudPic = class
   private
     pic: TPortableNetworkGraphic;
@@ -19,9 +21,14 @@ type
     procedure setPicPixel(x, y: integer; color : TColor);
     function getPicWidth(): integer;
     function getPicHeight(): integer;
+    procedure loadPic(Path : string);
+    procedure savePic(Path : string);
   end;
 
 implementation
+
+const
+  PIC_FORMAT = '.png';
 
 {TDudPic Begin}
 
@@ -54,6 +61,16 @@ begin
   result := pic.Height;
 end;
 
+procedure TDudPic.loadPic(Path : string);
+begin
+pic.LoadFromFile(Path);
+end;
+
+procedure TDudPic.savePic(Path : string);
+begin
+pic.SaveToFile(Path + PIC_FORMAT);
+end;
+
 procedure TDudPic.fill(color : TColor);
 var
   i,j : integer;
@@ -68,4 +85,5 @@ end;
 {TDudPic End}
 
 end.
+
 

@@ -5,8 +5,8 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, LCLType,
-  ExtCtrls, Menus, StdCtrls, Math, Windows, Unit2, DudUnit;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus, DudUnit,
+  ExtCtrls, DudDialogManagerUnit;
 
 type
 
@@ -15,93 +15,78 @@ type
   TForm1 = class(TForm)
     Image1: TImage;
     MainMenu1: TMainMenu;
-    MenuItem1: TMenuItem;
-    ScrollBar1: TScrollBar;
-    ScrollBar2: TScrollBar;
+    FileMenuItem: TMenuItem;
+    SaveFileMenuItem: TMenuItem;
+    OpenFileMenuItem: TMenuItem;
+    NewFileMenuItem: TMenuItem;
+    PopupMenu1: TPopupMenu;
     procedure FormCreate(Sender: TObject);
-    procedure FormResize(Sender: TObject);
-    procedure MenuItem1Click(Sender: TObject);
-    procedure ScrollBar1Change(Sender: TObject);
-    procedure CreatePic(argWidth,argHeight : integer);
+    procedure FileMenuItemClick(Sender: TObject);
+    procedure NewFileMenuItemClick(Sender: TObject);
+    procedure OpenFileMenuItemClick(Sender: TObject);
+    procedure SaveFileMenuItemClick(Sender: TObject);
   private
-    pixelA : integer;
+    obr: TDudPic;
+    pixelA: integer;
+    DialogManager: TDudDialogManager;
+    procedure RenderDudPic(picture: TDudPic);
   public
-    procedure renderDudPic(picture : TDudPic);
+
   end;
 
 var
   Form1: TForm1;
-  obr: TDudPic;
+
 implementation
 
 {$R *.lfm}
 
-{TForm1 Begin}
+{ TForm1 }
 
-procedure TForm1.renderDudPic(picture : TDudPic);
+procedure TForm1.RenderDudPic(picture: TDudPic);
 var
-  i,j : integer;
+  i, j: integer;
 begin
-  for i := 0 to picture.getPicWidth() do
+  if (picture <> nil) then
+  begin
+    for i := 0 to picture.getPicWidth() do
       for j := 0 to picture.getPicHeight() do
-          begin
-             //image1.canvas.pen.color := picture.getPicPixel(i,j);
-             image1.canvas.brush.color := picture.getPicPixel(i,j);
-             image1.canvas.rectangle(i*pixelA,j*pixelA,i*pixelA+pixelA,j*pixelA+pixelA);
-          end;
+      begin
+        //image1.canvas.pen.color := picture.getPicPixel(i,j);
+        image1.canvas.brush.color := picture.getPicPixel(i, j);
+        image1.canvas.rectangle(i * pixelA, j * pixelA, i * pixelA + pixelA, j * pixelA + pixelA);
+      end;
+  end
+  else
+    ShowMessage('Null Pointer Exception: obr>TDudPic is not created');
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  obr := TDudPic.Create(16,16);
-  pixelA := 60;
-  //renderDudPic(obr);
+  pixelA := 30;
+  DialogManager := TDudDialogManager.Create;
 end;
 
-procedure TForm1.FormResize(Sender: TObject);
+procedure TForm1.FileMenuItemClick(Sender: TObject);
 begin
-  if(obr <> nil) and (obr.getPicWidth()*pixelA <= image1.width) then
-  scrollbar1.Visible := false else
-    begin
-    scrollbar1.Visible := true;
-    scrollbar1.Width:= image1.Width;
-    end;
-
-  if(obr <> nil) and (obr.getPicHeight()*pixelA <= image1.height) then
-  scrollbar2.Visible := false else
-    begin
-    scrollbar2.Visible := true;
-    scrollbar2.height := image1.height;
-    end;
-
-  //renderDudPic(obr);
+  PopupMenu1.PopUp;
 end;
 
-procedure TForm1.CreatePic(argWidth,argHeight : integer);
+procedure TForm1.NewFileMenuItemClick(Sender: TObject);
 begin
-  obr := TDuDPic.Create(argwidth,argheight);
-  image1.width := argwidth*pixelA;
-  image1.height := argheight*pixelA;
-  image1.Picture.Bitmap.SetSize(width*pixelA,height*pixelA);
+  obr := DialogManager.UseNewFileDialog();
+  RenderDudPic(obr);
 end;
 
-procedure TForm1.MenuItem1Click(Sender: TObject);
-var
-  form2 : TForm2;
+procedure TForm1.OpenFileMenuItemClick(Sender: TObject);
 begin
-  //creatni okno
-  form2 := TForm2.Create(Self);
-  form2.Init(obr);
-  //okno.Visible:=true;
-  form2.Show;
+  obr := DialogManager.UseOpenFileDialog();
+  RenderDudPic(obr);
 end;
 
-procedure TForm1.ScrollBar1Change(Sender: TObject);
+procedure TForm1.SaveFileMenuItemClick(Sender: TObject);
 begin
-  image1.Left := -scrollbar1.Position;
-  renderDudPic(obr);
+  DialogManager.UseSaveFileDialog(obr);
 end;
 
-{TForm1 End}
 end.
-

@@ -35,7 +35,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="5">
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -50,18 +50,23 @@
         <UnitName Value="Unit1"/>
       </Unit1>
       <Unit2>
-        <Filename Value="unit2.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form2"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Unit2"/>
-      </Unit2>
-      <Unit3>
         <Filename Value="dudunit.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DudUnit"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="duddialogmanagerunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="DudDialogManagerUnit"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="dudnewfiledialogunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DudNewFileDialog"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="DudNewFileDialogUnit"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
