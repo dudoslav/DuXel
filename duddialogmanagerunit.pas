@@ -5,24 +5,24 @@ unit DudDialogManagerUnit;
 interface
 
 uses
-  Classes, SysUtils, DudNewFileDialogUnit, DudUnit, Dialogs;
+  Classes, SysUtils, DudNewFileDialogUnit, DudUnit, Dialogs, DudSettingsDialogUnit;
 
 type
 
   TDudDialogManager = class
   private
-    NewFileDialog: TDudNewFileDialog;
-    OpenFileDialog: TOpenDialog;
-    SaveFileDialog: TSaveDialog;
   public
     function UseNewFileDialog(): TDudPic;
     function UseOpenFileDialog(): TDudPic;
     procedure UseSaveFileDialog(picture: TDudPic);
+    procedure UseSettingsDialog();
   end;
 
 implementation
 
 function TDudDialogManager.UseNewFileDialog(): TDudPic;
+var
+  NewFileDialog: TDudNewFileDialog;
 begin
   NewFileDialog := TDudNewFileDialog.Create(nil);
   NewFileDialog.ShowModal;
@@ -31,6 +31,8 @@ begin
 end;
 
 function TDudDialogManager.UseOpenFileDialog(): TDudPic;
+var
+  OpenFileDialog: TOpenDialog;
 begin
   Result := TDudPic.Create(1, 1);
   OpenFileDialog := TOpenDialog.Create(nil);
@@ -42,15 +44,26 @@ begin
 end;
 
 procedure TDudDialogManager.UseSaveFileDialog(picture: TDudPic);
+var
+  SaveFileDialog: TSaveDialog;
 begin
   SaveFileDialog := TSaveDialog.Create(nil);
-  SaveFileDialog.Filter:='PortableNetworkGraphics|*.png|JPEG,JPG|*.jpg|Bitmap|*.bmp';
-  SaveFileDialog.FilterIndex:=0;
+  SaveFileDialog.Filter := 'PortableNetworkGraphics|*.png|JPEG,JPG|*.jpg|Bitmap|*.bmp';
+  SaveFileDialog.FilterIndex := 0;
   if (SaveFileDialog.Execute) then
     picture.savePic(SaveFileDialog.FileName)
   else
     ShowMessage('Failed to execute SaveDialog');
   SaveFileDialog.Free;
+end;
+
+procedure TDudDialogManager.UseSettingsDialog();
+var
+  SettingsDialog: TDudSettingsDialog;
+begin
+  SettingsDialog := TDudSettingsDialog.Create(nil);
+  SettingsDialog.ShowModal;
+  SettingsDialog.Free;
 end;
 
 end.

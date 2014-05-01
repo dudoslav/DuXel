@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, Unit1, DudUnit, DudDialogManagerUnit, DudNewFileDialogUnit, 
-DudToolsUnit
+DudToolsUnit, DudSettingsDialogUnit
   { you can add units after this };
 
 {$R *.res}
@@ -19,6 +19,7 @@ begin
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TDudNewFileDialog, DudNewFileDialog);
   Application.CreateForm(TDudTools, DudTools);
+  Application.CreateForm(TDudSettingsDialog, DudSettingsDialog);
   Application.Run;
 end.
 

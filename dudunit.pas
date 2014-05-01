@@ -26,6 +26,9 @@ type
     function getPic(): TPicture;
   end;
 
+var
+  pixelA: integer;
+
 implementation
 
 {TDudPic Begin}
