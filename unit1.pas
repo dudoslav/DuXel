@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus, DudUnit,
-  ExtCtrls, DudDialogManagerUnit;
+  ExtCtrls, DudDialogManagerUnit, DudToolsUnit;
 
 type
 
@@ -22,6 +22,11 @@ type
     PopupMenu1: TPopupMenu;
     procedure FormCreate(Sender: TObject);
     procedure FileMenuItemClick(Sender: TObject);
+    procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: integer);
+    procedure Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
+    procedure Image1MouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: integer);
     procedure NewFileMenuItemClick(Sender: TObject);
     procedure OpenFileMenuItemClick(Sender: TObject);
     procedure SaveFileMenuItemClick(Sender: TObject);
@@ -29,7 +34,9 @@ type
     obr: TDudPic;
     pixelA: integer;
     DialogManager: TDudDialogManager;
+    Tools: TDudTools;
     procedure RenderDudPic(picture: TDudPic);
+    procedure RenderPixel(xPic, yPic: integer; argColor: TColor);
   public
 
   end;
@@ -49,27 +56,58 @@ var
 begin
   if (picture <> nil) then
   begin
-    for i := 0 to picture.getPicWidth() do
-      for j := 0 to picture.getPicHeight() do
+    for i := 0 to picture.getPicWidth() - 1 do
+      for j := 0 to picture.getPicHeight() - 1 do
       begin
         //image1.canvas.pen.color := picture.getPicPixel(i,j);
         image1.canvas.brush.color := picture.getPicPixel(i, j);
-        image1.canvas.rectangle(i * pixelA, j * pixelA, i * pixelA + pixelA, j * pixelA + pixelA);
+        image1.canvas.rectangle(i * pixelA, j * pixelA, i * pixelA +
+          pixelA, j * pixelA + pixelA);
       end;
   end
   else
     ShowMessage('Null Pointer Exception: obr>TDudPic is not created');
 end;
 
+procedure TForm1.RenderPixel(xPic, yPic: integer; argColor: TColor);
+begin
+  //image1.canvas.pen.color := argColor;
+  image1.canvas.brush.color := argColor;
+  image1.canvas.rectangle(xPic * pixelA, yPic * pixelA, xPic * pixelA +
+    pixelA, yPic * pixelA + pixelA);
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   pixelA := 30;
   DialogManager := TDudDialogManager.Create;
+  Tools := TDudTools.Create(nil);
 end;
 
 procedure TForm1.FileMenuItemClick(Sender: TObject);
 begin
   PopupMenu1.PopUp;
+end;
+
+procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: integer);
+begin
+  //tools.tools[0].Draw();
+  //tools.getTool().Draw(x,y,image1.canvas,obr);
+  //obr.setPicPixel(x div pixelA, y div pixelA, clblack);
+  //RenderPixel(x div pixelA,y div pixelA, clblack);
+end;
+
+procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
+begin
+
+end;
+
+procedure TForm1.Image1MouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: integer);
+
+begin
+
 end;
 
 procedure TForm1.NewFileMenuItemClick(Sender: TObject);

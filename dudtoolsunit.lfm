@@ -1,0 +1,20 @@
+object DudTools: TDudTools
+  Left = 220
+  Height = 54
+  Top = 153
+  Width = 320
+  Caption = 'DudTools'
+  ClientHeight = 54
+  ClientWidth = 320
+  OnCreate = FormCreate
+  LCLVersion = '1.0.14.0'
+  object BitBtn1: TBitBtn
+    Left = 8
+    Height = 30
+    Top = 8
+    Width = 75
+    Caption = 'BitBtn1'
+    OnClick = BitBtn1Click
+    TabOrder = 0
+  end
+end

@@ -7,7 +7,8 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, Unit1, DudUnit, DudDialogManagerUnit, DudNewFileDialogUnit
+  Forms, Unit1, DudUnit, DudDialogManagerUnit, DudNewFileDialogUnit, 
+DudToolsUnit
   { you can add units after this };
 
 {$R *.res}
@@ -17,6 +18,7 @@ begin
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TDudNewFileDialog, DudNewFileDialog);
+  Application.CreateForm(TDudTools, DudTools);
   Application.Run;
 end.
 

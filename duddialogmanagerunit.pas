@@ -24,7 +24,7 @@ implementation
 
 function TDudDialogManager.UseNewFileDialog(): TDudPic;
 begin
-  NewFileDialog := TDudNewFileDialog.Create(nil);     //TOASK: opitaj peta!
+  NewFileDialog := TDudNewFileDialog.Create(nil);
   NewFileDialog.ShowModal;
   Result := NewFileDialog.getDudPic();
   NewFileDialog.Free;
@@ -44,6 +44,8 @@ end;
 procedure TDudDialogManager.UseSaveFileDialog(picture: TDudPic);
 begin
   SaveFileDialog := TSaveDialog.Create(nil);
+  SaveFileDialog.Filter:='PortableNetworkGraphics|*.png|JPEG,JPG|*.jpg|Bitmap|*.bmp';
+  SaveFileDialog.FilterIndex:=0;
   if (SaveFileDialog.Execute) then
     picture.savePic(SaveFileDialog.FileName)
   else

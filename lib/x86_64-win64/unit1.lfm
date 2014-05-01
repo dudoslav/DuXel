@@ -14,6 +14,9 @@ object Form1: TForm1
     Height = 512
     Top = 20
     Width = 512
+    OnMouseDown = Image1MouseDown
+    OnMouseMove = Image1MouseMove
+    OnMouseUp = Image1MouseUp
   end
   object MainMenu1: TMainMenu
     object FileMenuItem: TMenuItem
