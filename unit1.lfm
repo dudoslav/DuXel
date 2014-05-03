@@ -7,6 +7,7 @@ object Form1: TForm1
   ClientHeight = 512
   ClientWidth = 512
   Menu = MainMenu1
+  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   LCLVersion = '1.2.2.0'
@@ -43,5 +44,10 @@ object Form1: TForm1
       Caption = 'Save File'
       OnClick = SaveFileMenuItemClick
     end
+  end
+  object Timer1: TTimer
+    Enabled = False
+    OnTimer = Timer1Timer
+    left = 64
   end
 end

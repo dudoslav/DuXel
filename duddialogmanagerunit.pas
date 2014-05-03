@@ -24,7 +24,7 @@ function TDudDialogManager.UseNewFileDialog(): TDudPic;
 var
   NewFileDialog: TDudNewFileDialog;
 begin
-  NewFileDialog := TDudNewFileDialog.Create(nil);
+  NewFileDialog := TDudNewFileDialog.Create(NewFileDialog);
   NewFileDialog.ShowModal;
   Result := NewFileDialog.getDudPic();
   NewFileDialog.Free;
@@ -35,7 +35,7 @@ var
   OpenFileDialog: TOpenDialog;
 begin
   Result := TDudPic.Create(1, 1);
-  OpenFileDialog := TOpenDialog.Create(nil);
+  OpenFileDialog := TOpenDialog.Create(OpenFileDialog);
   if (OpenFileDialog.Execute) then
     Result.loadPic(OpenFileDialog.FileName)
   else
@@ -47,7 +47,7 @@ procedure TDudDialogManager.UseSaveFileDialog(picture: TDudPic);
 var
   SaveFileDialog: TSaveDialog;
 begin
-  SaveFileDialog := TSaveDialog.Create(nil);
+  SaveFileDialog := TSaveDialog.Create(SaveFileDialog);
   SaveFileDialog.Filter := 'PortableNetworkGraphics|*.png|JPEG,JPG|*.jpg|Bitmap|*.bmp';
   SaveFileDialog.FilterIndex := 0;
   if (SaveFileDialog.Execute) then
@@ -61,7 +61,7 @@ procedure TDudDialogManager.UseSettingsDialog();
 var
   SettingsDialog: TDudSettingsDialog;
 begin
-  SettingsDialog := TDudSettingsDialog.Create(nil);
+  SettingsDialog := TDudSettingsDialog.Create(SettingsDialog);
   SettingsDialog.ShowModal;
   SettingsDialog.Free;
 end;

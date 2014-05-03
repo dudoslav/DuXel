@@ -79,6 +79,7 @@
         <Filename Value="dudsettingsdialogunit.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="DudSettingsDialog"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="DudSettingsDialogUnit"/>
       </Unit6>

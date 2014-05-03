@@ -21,6 +21,8 @@ type
     OpenFileMenuItem: TMenuItem;
     NewFileMenuItem: TMenuItem;
     PopupMenu1: TPopupMenu;
+    Timer1: TTimer;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FileMenuItemClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -33,11 +35,13 @@ type
     procedure NewFileMenuItemClick(Sender: TObject);
     procedure OpenFileMenuItemClick(Sender: TObject);
     procedure SaveFileMenuItemClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
     obr: TDudPic;
     DialogManager: TDudDialogManager;
     Tools: TDudTools;
-    procedure RenderDudPic(picture: TDudPic);
+    Mouse: TPoint;
+    procedure ResizeImage();
     procedure RenderPixel(xPic, yPic: integer; argColor: TColor);
   public
 
@@ -52,25 +56,15 @@ implementation
 
 { TForm1 }
 
-procedure TForm1.RenderDudPic(picture: TDudPic);
+procedure TForm1.ResizeImage();
 var
   i, j: integer;
 begin
-  image1.Width:= obr.getPic().Width*pixelA;
-  image1.Height:= obr.getPic().Height*pixelA;
-  if (picture <> nil) then
+  if (obr <> nil) then
   begin
-    for i := 0 to picture.getPicWidth() - 1 do
-      for j := 0 to picture.getPicHeight() - 1 do
-      begin
-        image1.canvas.pen.color := picture.getPicPixel(i,j);
-        image1.canvas.brush.color := picture.getPicPixel(i, j);
-        image1.canvas.rectangle(i * pixelA, j * pixelA, i * pixelA +
-          pixelA, j * pixelA + pixelA);
-      end;
-  end
-  else
-    ShowMessage('Null Pointer Exception: obr>TDudPic is not created');
+  image1.Width := obr.getPic().Width * pixelA;
+  image1.Height := obr.getPic().Height * pixelA;
+  end;
 end;
 
 procedure TForm1.RenderPixel(xPic, yPic: integer; argColor: TColor);
@@ -98,44 +92,50 @@ procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
 begin
   if shift = [ssleft] then
-     begin
-     tools.getTool().Draw(x,y,tools.getColor(),image1.canvas,obr);
-     end;
+  begin
+    mouse.x := x;
+    mouse.y := y;
+    timer1.Interval := tools.getTool().settings.Frequecy;
+    timer1.Enabled := True;
+  end;
 end;
 
 procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
 begin
   if shift = [ssleft] then
-     begin
-     tools.getTool().Draw(x,y,tools.getColor(),image1.canvas,obr);
-     end;
+  begin
+    mouse.x := x;
+    mouse.y := y;
+  end;
 end;
 
 procedure TForm1.Image1MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
 begin
-  if shift = [ssleft] then
-     begin
-     tools.getTool().Draw(x,y,tools.getColor(),image1.canvas,obr);
-     end;
+  mouse.x := x;
+  mouse.y := y;
+  timer1.Enabled := False;
 end;
 
 procedure TForm1.SettingsMenuItemClick(Sender: TObject);
 begin
   DialogManager.UseSettingsDialog();
-  RenderDudPic(obr);
+  obr.render(image1.canvas);
+  ResizeImage();
 end;
 
 procedure TForm1.NewFileMenuItemClick(Sender: TObject);
 begin
   obr := DialogManager.UseNewFileDialog();
-  RenderDudPic(obr);
+  obr.render(image1.canvas);
+  ResizeImage();
 end;
 
 procedure TForm1.OpenFileMenuItemClick(Sender: TObject);
 begin
   obr := DialogManager.UseOpenFileDialog();
-  RenderDudPic(obr);
+  obr.render(image1.canvas);
+  ResizeImage();
 end;
 
 procedure TForm1.SaveFileMenuItemClick(Sender: TObject);
@@ -143,9 +143,21 @@ begin
   DialogManager.UseSaveFileDialog(obr);
 end;
 
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  tools.getTool().Draw(mouse.x, mouse.y, tools.getColor(), image1.canvas, obr);
+end;
+
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
-  tools.free;
+  tools.Free;
+  //obr.Free;
+  //DialogManager.Free;
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+
 end;
 
 end.

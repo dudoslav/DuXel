@@ -9,7 +9,7 @@ uses
 
 type
 
-  //TODO: dorob destructor
+  //TODO: dorob destructor, Ved on nejde!
 
   TDudPic = class
   private
@@ -24,6 +24,7 @@ type
     procedure loadPic(Path: string);
     procedure savePic(Path: string);
     function getPic(): TPicture;
+    procedure render(canvas : TCanvas);
   end;
 
 var
@@ -86,6 +87,20 @@ end;
 function TDudPic.getPic(): TPicture;
 begin
   result := pic;
+end;
+
+procedure TDudPic.render(canvas : TCanvas);
+var
+  i,j : integer;
+begin
+  for i := 0 to getPicWidth() - 1 do
+      for j := 0 to getPicHeight() - 1 do
+      begin
+        canvas.pen.color := getPicPixel(i, j);
+        canvas.brush.color := getPicPixel(i, j);
+        canvas.rectangle(i * pixelA, j * pixelA, i * pixelA +
+          pixelA, j * pixelA + pixelA);
+      end;
 end;
 
 {TDudPic End}
