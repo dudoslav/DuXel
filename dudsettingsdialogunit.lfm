@@ -1,5 +1,5 @@
 object DudSettingsDialog: TDudSettingsDialog
-  Left = 387
+  Left = 506
   Height = 240
   Top = 275
   Width = 320

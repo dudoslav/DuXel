@@ -24,7 +24,9 @@ type
     procedure loadPic(Path: string);
     procedure savePic(Path: string);
     function getPic(): TPicture;
+    procedure setPic(picture : TPicture);
     procedure render(canvas : TCanvas);
+    destructor Destroy();override;
   end;
 
 var
@@ -89,6 +91,11 @@ begin
   result := pic;
 end;
 
+procedure TDudPic.setPic(picture : TPicture);
+begin
+  pic := picture;
+end;
+
 procedure TDudPic.render(canvas : TCanvas);
 var
   i,j : integer;
@@ -101,6 +108,11 @@ begin
         canvas.rectangle(i * pixelA, j * pixelA, i * pixelA +
           pixelA, j * pixelA + pixelA);
       end;
+end;
+
+destructor TDudPic.Destroy();
+begin
+  pic.Free;
 end;
 
 {TDudPic End}

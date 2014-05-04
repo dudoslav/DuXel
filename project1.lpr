@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, Unit1, DudUnit, DudDialogManagerUnit, DudNewFileDialogUnit, 
-DudToolsUnit, DudSettingsDialogUnit
+DudToolsUnit, DudSettingsDialogUnit, DudHistoryManagerUnit
   { you can add units after this };
 
 {$R *.res}

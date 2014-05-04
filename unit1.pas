@@ -5,8 +5,8 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus, DudUnit,
-  ExtCtrls, DudDialogManagerUnit, DudToolsUnit;
+  Classes, SysUtils, FileUtil, Forms, LCLType, Controls, Graphics, Dialogs, Menus, DudUnit,
+  ExtCtrls, DudDialogManagerUnit, DudToolsUnit, DudHistoryManagerUnit;
 
 type
 
@@ -26,6 +26,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FileMenuItemClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: integer);
     procedure Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
@@ -39,6 +40,7 @@ type
   private
     obr: TDudPic;
     DialogManager: TDudDialogManager;
+    HistoryManager: TDudHistoryManager;
     Tools: TDudTools;
     Mouse: TPoint;
     procedure ResizeImage();
@@ -79,8 +81,8 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   pixelA := 30;
   DialogManager := TDudDialogManager.Create;
+  HistoryManager := TDudHistoryManager.Create;
   Tools := TDudTools.Create(nil);
-  Tools.Show;
 end;
 
 procedure TForm1.FileMenuItemClick(Sender: TObject);
@@ -115,6 +117,7 @@ begin
   mouse.x := x;
   mouse.y := y;
   timer1.Enabled := False;
+  HistoryManager.addLastPicture(obr.getPic().Bitmap);
 end;
 
 procedure TForm1.SettingsMenuItemClick(Sender: TObject);
@@ -129,6 +132,7 @@ begin
   obr := DialogManager.UseNewFileDialog();
   obr.render(image1.canvas);
   ResizeImage();
+  Tools.Show;
 end;
 
 procedure TForm1.OpenFileMenuItemClick(Sender: TObject);
@@ -136,6 +140,7 @@ begin
   obr := DialogManager.UseOpenFileDialog();
   obr.render(image1.canvas);
   ResizeImage();
+  Tools.Show;
 end;
 
 procedure TForm1.SaveFileMenuItemClick(Sender: TObject);
@@ -145,14 +150,26 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-  tools.getTool().Draw(mouse.x, mouse.y, tools.getColor(), image1.canvas, obr);
+  tools.getTool().Draw(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
+  tools.ColorButton1.ButtonColor:=Tools.getColor();
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
   tools.Free;
-  //obr.Free;
+  obr.Free;
   //DialogManager.Free;
+end;
+
+procedure TForm1.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState
+  );
+begin
+  if key = VK_Z then
+  begin
+  obr.getPic().Bitmap := HistoryManager.getLastPicture();
+  //obr := HistoryManager.getLastPicture();
+  obr.render(image1.canvas);
+  end;
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
