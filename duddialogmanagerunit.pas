@@ -5,12 +5,13 @@ unit DudDialogManagerUnit;
 interface
 
 uses
-  Classes, SysUtils, DudNewFileDialogUnit, DudUnit, Dialogs, DudSettingsDialogUnit;
+  Classes, SysUtils, DudNewFileDialogUnit, DudUnit, Dialogs, DudSettingsDialogUnit, DudTilesViewerDialogUnit;
 
 type
 
   TDudDialogManager = class
   private
+    procedure OpenTilesViewerDialog();
   public
     function UseNewFileDialog(): TDudPic;
     function UseOpenFileDialog(): TDudPic;
@@ -63,7 +64,17 @@ var
 begin
   SettingsDialog := TDudSettingsDialog.Create(nil);
   SettingsDialog.ShowModal;
+  if settingsDialog.CheckBox1.Checked then OpenTilesViewerDialog();
   SettingsDialog.Free;
+end;
+
+procedure TDudDialogManager.OpenTilesViewerDialog();
+var
+  TilesViewerDialog : TDudTilesViewerDialog;
+begin
+  TilesViewerDialog := TDudTilesViewerDialog.Create(nil);
+  //TilesViewerDialog.render();
+  TilesViewerDialog.Show;
 end;
 
 end.

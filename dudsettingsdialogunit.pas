@@ -13,6 +13,7 @@ type
 
   TDudSettingsDialog = class(TForm)
     Button1: TButton;
+    CheckBox1: TCheckBox;
     Edit1: TEdit;
     procedure Button1Click(Sender: TObject);
   private

@@ -3,6 +3,9 @@ object Form1: TForm1
   Height = 532
   Top = 190
   Width = 512
+  HorzScrollBar.Page = 512
+  VertScrollBar.Page = 512
+  AutoScroll = True
   Caption = 'DuXel'
   ClientHeight = 512
   ClientWidth = 512
@@ -16,11 +19,12 @@ object Form1: TForm1
   object Image1: TImage
     Left = 0
     Height = 512
-    Top = 20
+    Top = 0
     Width = 512
     OnMouseDown = Image1MouseDown
     OnMouseMove = Image1MouseMove
     OnMouseUp = Image1MouseUp
+    OnResize = Image1Resize
   end
   object MainMenu1: TMainMenu
     object FileMenuItem: TMenuItem

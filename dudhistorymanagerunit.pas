@@ -29,20 +29,31 @@ end;
 
 function TDudHistoryManager.getLastPicture(): TBitMap;
 begin
-  Result := pictures[length(pictures)-2];
-  pictures[length(pictures)-2] :=  pictures[length(pictures)-1];
+  if length(pictures) > 1 then
+  begin
+  Result := pictures[length(pictures)-1];
+  pictures[length(pictures)-1] :=  pictures[length(pictures)];
   setLength(pictures,length(pictures)-1);
-
-  pictures[length(pictures)-1].SaveToFile('test1.bmp');
-  pictures[0].SaveToFile('test2.bmp');
+  end else
+  begin
+  Result := pictures[length(pictures)-1];
+  end;
 end;
 
 procedure TDudHistoryManager.addLastPicture(picture : TBitMap);
 var
   clonePic : TBitMap;
+  i,j : integer;
 begin
+  clonePic := TBitMap.Create;
+  clonepic.SetSize(picture.Width,picture.Height);
+  for i := 0 to picture.Width-1 do
+      for j := 0 to picture.Height-1 do
+          begin
+          clonepic.Canvas.Pixels[i,j] := picture.Canvas.Pixels[i,j];
+          end;
   setLength(pictures,length(pictures)+1);
-  pictures[length(pictures)-1] := picture;
+  pictures[length(pictures)-1] := clonePic;
 end;
 
 {TDudHistory end}

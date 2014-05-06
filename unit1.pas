@@ -5,7 +5,8 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, LCLType, Controls, Graphics, Dialogs, Menus, DudUnit,
+  Classes, SysUtils, FileUtil, Forms, LCLType, Controls, Graphics,
+  Dialogs, Menus, DudUnit,
   ExtCtrls, DudDialogManagerUnit, DudToolsUnit, DudHistoryManagerUnit;
 
 type
@@ -26,12 +27,13 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FileMenuItemClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormKeyDown(Sender: TObject; var Key: word; Shift: TShiftState);
     procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: integer);
     procedure Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
     procedure Image1MouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: integer);
+    procedure Image1Resize(Sender: TObject);
     procedure SettingsMenuItemClick(Sender: TObject);
     procedure NewFileMenuItemClick(Sender: TObject);
     procedure OpenFileMenuItemClick(Sender: TObject);
@@ -64,8 +66,9 @@ var
 begin
   if (obr <> nil) then
   begin
-  image1.Width := obr.getPic().Width * pixelA;
-  image1.Height := obr.getPic().Height * pixelA;
+    image1.Picture.bitmap.SetSize(obr.getPicWidth() * pixelA, obr.getPicHeight() * pixelA);
+    image1.Width := image1.Picture.Bitmap.Width;
+    image1.Height := image1.Picture.Bitmap.Height;
   end;
 end;
 
@@ -97,6 +100,7 @@ begin
   begin
     mouse.x := x;
     mouse.y := y;
+    HistoryManager.addLastPicture(obr.getPic().Bitmap);
     timer1.Interval := tools.getTool().settings.Frequecy;
     timer1.Enabled := True;
   end;
@@ -117,7 +121,13 @@ begin
   mouse.x := x;
   mouse.y := y;
   timer1.Enabled := False;
-  HistoryManager.addLastPicture(obr.getPic().Bitmap);
+end;
+
+procedure TForm1.Image1Resize(Sender: TObject);
+begin
+  ResizeImage();
+  if obr <> nil then
+    obr.render(image1.canvas);
 end;
 
 procedure TForm1.SettingsMenuItemClick(Sender: TObject);
@@ -133,6 +143,7 @@ begin
   obr.render(image1.canvas);
   ResizeImage();
   Tools.Show;
+  HistoryManager.addLastPicture(obr.getPic().Bitmap);
 end;
 
 procedure TForm1.OpenFileMenuItemClick(Sender: TObject);
@@ -141,6 +152,7 @@ begin
   obr.render(image1.canvas);
   ResizeImage();
   Tools.Show;
+  HistoryManager.addLastPicture(obr.getPic().Bitmap);
 end;
 
 procedure TForm1.SaveFileMenuItemClick(Sender: TObject);
@@ -151,7 +163,7 @@ end;
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
   tools.getTool().Draw(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
-  tools.ColorButton1.ButtonColor:=Tools.getColor();
+  tools.ColorButton1.ButtonColor := Tools.getColor();
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
@@ -161,14 +173,12 @@ begin
   //DialogManager.Free;
 end;
 
-procedure TForm1.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState
-  );
+procedure TForm1.FormKeyDown(Sender: TObject; var Key: word; Shift: TShiftState);
 begin
   if key = VK_Z then
   begin
-  obr.getPic().Bitmap := HistoryManager.getLastPicture();
-  //obr := HistoryManager.getLastPicture();
-  obr.render(image1.canvas);
+    obr.getPic().Bitmap := HistoryManager.getLastPicture();
+    obr.render(image1.canvas);
   end;
 end;
 
