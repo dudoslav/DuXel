@@ -49,9 +49,7 @@ begin
   Result := TDudPic.Create(1, 1);
   OpenFileDialog := TOpenDialog.Create(nil);
   if (OpenFileDialog.Execute) then
-    Result.loadPic(OpenFileDialog.FileName)
-  else
-    ShowMessage('Failed to execute OpenDialog');
+    Result.loadPic(OpenFileDialog.FileName);
   OpenFileDialog.Free;
 end;
 
@@ -63,9 +61,7 @@ begin
   SaveFileDialog.Filter := 'PortableNetworkGraphics|*.png|JPEG,JPG|*.jpg|Bitmap|*.bmp';
   SaveFileDialog.FilterIndex := 0;
   if (SaveFileDialog.Execute) then
-    picture.savePic(SaveFileDialog.FileName)
-  else
-    ShowMessage('Failed to execute SaveDialog');
+    picture.savePic(SaveFileDialog.FileName);
   SaveFileDialog.Free;
 end;
 

@@ -51,7 +51,7 @@ type
     Tools: TDudTools;
     Mouse: TPoint;
     procedure ResizeImage();
-    procedure RenderPixel(xPic, yPic: integer; argColor: TColor);
+    //procedure RenderPixel(xPic, yPic: integer; argColor: TColor);
   public
 
   end;
@@ -71,22 +71,25 @@ var
 begin
   if (obr <> nil) then
   begin
-    image1.Picture.bitmap.SetSize(obr.getPicWidth() * pixelA, obr.getPicHeight() * pixelA);
+    image1.Picture.bitmap.SetSize(obr.getPicWidth() * pixelA,
+      obr.getPicHeight() * pixelA);
     image1.Width := image1.Picture.Bitmap.Width;
     image1.Height := image1.Picture.Bitmap.Height;
   end;
 end;
 
-procedure TForm1.RenderPixel(xPic, yPic: integer; argColor: TColor);
+{procedure TForm1.RenderPixel(xPic, yPic: integer; argColor: TColor);
 begin
   image1.canvas.pen.color := argColor;
   image1.canvas.brush.color := argColor;
   image1.canvas.rectangle(xPic * pixelA, yPic * pixelA, xPic * pixelA +
     pixelA, yPic * pixelA + pixelA);
-end;
+end;}
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+  randomize;
+  DoubleBuffered := True;
   pixelA := 30;
   DialogManager := TDudDialogManager.Create;
   HistoryManager := TDudHistoryManager.Create;
@@ -101,7 +104,7 @@ end;
 procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
 begin
-  if shift = [ssleft] then
+  if (shift = [ssleft]) and (obr <> nil) then
   begin
     mouse.x := x;
     mouse.y := y;
@@ -114,21 +117,26 @@ end;
 
 procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
 begin
-  if shift = [ssleft] then
+  if (shift = [ssleft]) and (obr <> nil) then
   begin
     mouse.x := x;
     mouse.y := y;
+    Tools.getTool().OnMouseMove(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
+    DialogManager.RenderTilesViewerDialog(obr);
   end;
 end;
 
 procedure TForm1.Image1MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
 begin
-  mouse.x := x;
-  mouse.y := y;
-  timer1.Enabled := False;
-  Tools.getTool().OnMouseUp(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
-  DialogManager.RenderTilesViewerDialog(obr);
+  if obr <> nil then
+  begin
+    mouse.x := x;
+    mouse.y := y;
+    timer1.Enabled := False;
+    Tools.getTool().OnMouseUp(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
+    DialogManager.RenderTilesViewerDialog(obr);
+  end;
 end;
 
 procedure TForm1.Image1Resize(Sender: TObject);
@@ -158,19 +166,25 @@ end;
 procedure TForm1.NewFileMenuItemClick(Sender: TObject);
 begin
   obr := DialogManager.UseNewFileDialog();
-  obr.render(image1.canvas);
-  ResizeImage();
-  Tools.Show;
-  HistoryManager.addLastPicture(obr.getPic().Bitmap);
+  if obr <> nil then
+  begin
+    obr.render(image1.canvas);
+    ResizeImage();
+    Tools.Show;
+    HistoryManager.addLastPicture(obr.getPic().Bitmap);
+  end;
 end;
 
 procedure TForm1.OpenFileMenuItemClick(Sender: TObject);
 begin
   obr := DialogManager.UseOpenFileDialog();
-  obr.render(image1.canvas);
-  ResizeImage();
-  Tools.Show;
-  HistoryManager.addLastPicture(obr.getPic().Bitmap);
+  if obr <> nil then
+  begin
+    obr.render(image1.canvas);
+    ResizeImage();
+    Tools.Show;
+    HistoryManager.addLastPicture(obr.getPic().Bitmap);
+  end;
 end;
 
 procedure TForm1.SaveFileMenuItemClick(Sender: TObject);
@@ -180,7 +194,7 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-  tools.getTool().OnMouseMove(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
+  tools.getTool().onTimerDo(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
   tools.ColorButton1.ButtonColor := Tools.getColor();
 end;
 
@@ -193,7 +207,7 @@ end;
 
 procedure TForm1.FormKeyDown(Sender: TObject; var Key: word; Shift: TShiftState);
 begin
-  if key = VK_Z then
+  if (key = VK_Z) and (obr <> nil) then
   begin
     obr.getPic().Bitmap := HistoryManager.getLastPicture();
     obr.render(image1.canvas);

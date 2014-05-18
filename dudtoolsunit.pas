@@ -27,6 +27,8 @@ type
       var picture: TDudPic); virtual;
     procedure OnMouseUp(x, y: integer; var color: TColor; argCanvas: TCanvas;
       var picture: TDudPic); virtual;
+    procedure onTimerDo(x, y: integer; var color: TColor; argCanvas: TCanvas;
+      var picture: TDudPic); virtual;
   end;
 
   TEraser = class(TTool)
@@ -44,13 +46,13 @@ type
 
   TBrush = class(TTool)
   public
-    procedure OnMouseMove(x, y: integer; var color: TColor; argCanvas: TCanvas;
+    procedure OnTimerDO(x, y: integer; var color: TColor; argCanvas: TCanvas;
       var picture: TDudPic); override;
   end;
 
   TBucket = class(TTool)
   public
-    procedure OnMouseMove(x, y: integer; var color: TColor; argCanvas: TCanvas;
+    procedure OnMouseDown(x, y: integer; var color: TColor; argCanvas: TCanvas;
       var picture: TDudPic); override;
   end;
 
@@ -70,6 +72,12 @@ type
   public
     procedure OnMouseDown(x, y: integer; var color: TColor;
       argCanvas: TCanvas; var picture: TDudPic); override;
+  end;
+
+  TSmoothTool = class(TTool)
+    public
+      procedure OnMouseMove(x, y: integer; var color: TColor; argCanvas: TCanvas;
+      var picture: TDudPic); override;
   end;
 
   { TDudTools }
@@ -111,7 +119,7 @@ type
     useTool: integer;
   public
     useColor: TColor;
-    tools: array [0..1] of TTool;
+    tools: array [0..7] of TTool;
     function getTool(): TTool;
     function getColor(): TColor;
   end;
@@ -149,6 +157,12 @@ begin
 
 end;
 
+procedure TTool.onTimerDo(x, y: integer; var color: TColor; argCanvas: TCanvas;
+  var picture: TDudPic);
+begin
+
+end;
+
 {TTool end}
 
 {TEraser begin}
@@ -179,7 +193,7 @@ end;
 
 {TBrush begin}
 
-procedure TBrush.OnMouseMove(x, y: integer; var color: TColor;
+procedure TBrush.OnTimerDo(x, y: integer; var color: TColor;
   argCanvas: TCanvas; var picture: TDudPic);
 var
   i, j: integer;
@@ -193,6 +207,7 @@ begin
           DudUnit.pixelA + j, color);
         argcanvas.brush.color := color;
         argcanvas.pen.color := color;
+        //argCanvas.Pixels[x div pixelA,y div pixelA] := color;
         argcanvas.rectangle(x div DudUnit.pixelA * DudUnit.pixelA +
           i * DudUnit.pixelA, y div DudUnit.pixelA * DudUnit.pixelA +
           j * DudUnit.pixelA, x div DudUnit.pixelA * DudUnit.pixelA +
@@ -206,7 +221,7 @@ end;
 
 {TBucket begin}
 
-procedure TBucket.OnMouseMove(x, y: integer; var color: TColor;
+procedure TBucket.OnMouseDown(x, y: integer; var color: TColor;
   argCanvas: TCanvas; var picture: TDudPic);
 begin
   picture.getPic().BitMap.Canvas.Brush.color := color;
@@ -238,15 +253,13 @@ begin
   picture.setPicPixel(x div DudUnit.pixelA, y div DudUnit.pixelA, color);
   argcanvas.brush.color := color;
   argcanvas.pen.color := color;
-  argcanvas.rectangle(x div DudUnit.pixelA * DudUnit.pixelA +
-    DudUnit.pixelA, y div DudUnit.pixelA *
-    DudUnit.pixelA + DudUnit.pixelA, x div
-    DudUnit.pixelA * DudUnit.pixelA + DudUnit.pixelA +
+  argcanvas.rectangle(x div DudUnit.pixelA * DudUnit.pixelA, y div
+    DudUnit.pixelA * DudUnit.pixelA, x div DudUnit.pixelA * DudUnit.pixelA +
     DudUnit.pixelA, y div DudUnit.pixelA * DudUnit.pixelA +
-    DudUnit.pixelA + DudUnit.pixelA);
+    DudUnit.pixelA);
 end;
 
-procedure TPen.OnMousemove(x, y: integer; var color: TColor;
+procedure TPen.OnMouseMove(x, y: integer; var color: TColor;
   argCanvas: TCanvas; var picture: TDudPic);
 begin
   picture.getPic().bitmap.canvas.pen.Color := color;
@@ -255,7 +268,10 @@ begin
   picture.getPic().bitmap.canvas.LineTo(x div pixelA, y div pixelA);
   settings.oldX := x;
   settings.oldY := y;
-  picture.render(argCanvas);
+  argcanvas.rectangle(x div DudUnit.pixelA * DudUnit.pixelA, y div
+    DudUnit.pixelA * DudUnit.pixelA, x div DudUnit.pixelA * DudUnit.pixelA +
+    DudUnit.pixelA, y div DudUnit.pixelA * DudUnit.pixelA +
+    DudUnit.pixelA);
 end;
 
 {TPen end}
@@ -279,16 +295,51 @@ end;
 
 {TNoiseGenerator begin}
 
- procedure TNoiseGenerator.OnMouseDown(x, y: integer; var color: TColor;
+procedure TNoiseGenerator.OnMouseDown(x, y: integer; var color: TColor;
   argCanvas: TCanvas; var picture: TDudPic);
- var
-   DialogManager : TDudDialogManager;
- begin
-   DialogManager := TDudDialogManager.Create();
-   DialogManager.UseDudNoiseDialog(picture,argcanvas);
- end;
+var
+  DialogManager: TDudDialogManager;
+begin
+  DialogManager := TDudDialogManager.Create();
+  DialogManager.UseDudNoiseDialog(picture, argcanvas);
+end;
 
 {TNoiseGenerator end}
+
+{TSmoothTool begin}
+
+procedure TSmoothTool.OnMouseMove(x, y: integer; var color: TColor; argCanvas: TCanvas;
+      var picture: TDudPic);
+var
+  i,j : integer;
+  nowcolor : TColor;
+begin
+  settings.Radius:= 2;
+   for i := -settings.Radius to settings.Radius do
+    for j := -settings.Radius to settings.Radius do
+    begin
+      if (sqrt(sqr(i) + sqr(j)) <= settings.Radius) then
+      begin
+
+        nowColor := (picture.getPicPixel(x div DudUnit.pixelA+i+1,y div DudUnit.pixelA+j+1)
+        + picture.getPicPixel(x div DudUnit.pixelA+i-1,y div DudUnit.pixelA+j+1)
+        + picture.getPicPixel(x div DudUnit.pixelA+i-1,y div DudUnit.pixelA+j-1)
+        + picture.getPicPixel(x div DudUnit.pixelA+i+1,y div DudUnit.pixelA+j-1)) div 4;
+
+        picture.setPicPixel(x div DudUnit.pixelA + i, y div
+          DudUnit.pixelA + j, nowColor);
+        argcanvas.brush.color := nowcolor;
+        argcanvas.pen.color := nowcolor;
+        argcanvas.rectangle(x div DudUnit.pixelA * DudUnit.pixelA +
+          i * DudUnit.pixelA, y div DudUnit.pixelA * DudUnit.pixelA +
+          j * DudUnit.pixelA, x div DudUnit.pixelA * DudUnit.pixelA +
+          DudUnit.pixelA + i * DudUnit.pixelA, y div DudUnit.pixelA *
+          DudUnit.pixelA + DudUnit.pixelA + j * DudUnit.pixelA);
+      end;
+    end;
+end;
+
+{TSmoothTool end}
 
 {TDudTools begin}
 
@@ -308,7 +359,8 @@ begin
   tools[3] := TColorPicker.Create(0, 10);
   tools[4] := TPen.Create(0, 10);
   tools[5] := TText.Create(0, 10);
-  tools[6] := TNoiseGenerator.Create(0,10);
+  tools[6] := TNoiseGenerator.Create(0, 10);
+  tools[7] := TSmoothTool.Create(0,10);
 end;
 
 procedure TDudTools.SpinEdit1Change(Sender: TObject);
@@ -368,7 +420,7 @@ end;
 
 procedure TDudTools.BitBtn8Click(Sender: TObject);
 begin
-
+  useTool := 7;
 end;
 
 procedure TDudTools.ColorButton1ColorChanged(Sender: TObject);

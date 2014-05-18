@@ -44,6 +44,8 @@ begin
   pic := TPicture.Create;
   pic.Bitmap.Width := Width;
   pic.Bitmap.Height := Height;
+  pic.bitmap.PixelFormat:= pf32bit;
+  pic.bitmap.TransparentMode:=tmfixed;
 
   fill(clwhite);
 end;
