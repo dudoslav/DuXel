@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Math, Graphics, Dialogs,
-  StdCtrls, Spin, DudUnit;
+  StdCtrls, Spin, ExtCtrls, DudUnit;
 
 type
 
@@ -18,6 +18,7 @@ type
     Button3: TButton;
     Button4: TButton;
     Button5: TButton;
+    Image1: TImage;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -136,19 +137,29 @@ begin
   thisPicture.render(thisCanvas);
 end;
 
+
 procedure TDudNoiseDialog.ScrollBar1Change(Sender: TObject);
 begin
   SpinEdit1.Value := ScrollBar1.Position;
+  image1.canvas.brush.color := RGBtoColor(SpinEdit1.Value,SpinEdit2.Value,SpinEdit3.Value);
+  image1.canvas.pen.color := RGBtoColor(SpinEdit1.Value,SpinEdit2.Value,SpinEdit3.Value);
+  image1.canvas.Rectangle(0,0,image1.Width,image1.Height);
 end;
 
 procedure TDudNoiseDialog.ScrollBar2Change(Sender: TObject);
 begin
   SpinEdit2.Value := ScrollBar2.Position;
+  image1.canvas.brush.color := RGBtoColor(SpinEdit1.Value,SpinEdit2.Value,SpinEdit3.Value);
+  image1.canvas.pen.color := RGBtoColor(SpinEdit1.Value,SpinEdit2.Value,SpinEdit3.Value);
+  image1.canvas.Rectangle(0,0,image1.Width,image1.Height);
 end;
 
 procedure TDudNoiseDialog.ScrollBar3Change(Sender: TObject);
 begin
   SpinEdit3.Value := ScrollBar3.Position;
+  image1.canvas.brush.color := RGBtoColor(SpinEdit1.Value,SpinEdit2.Value,SpinEdit3.Value);
+  image1.canvas.pen.color := RGBtoColor(SpinEdit1.Value,SpinEdit2.Value,SpinEdit3.Value);
+  image1.canvas.Rectangle(0,0,image1.Width,image1.Height);
 end;
 
 end.

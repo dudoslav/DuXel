@@ -6,6 +6,7 @@ object DudNoiseDialog: TDudNoiseDialog
   Caption = 'DudNoiseDialog'
   ClientHeight = 240
   ClientWidth = 320
+  Color = 8454143
   LCLVersion = '1.2.2.0'
   object Button1: TButton
     Left = 0
@@ -138,5 +139,11 @@ object DudNoiseDialog: TDudNoiseDialog
     Caption = 'Piramid'
     OnClick = Button5Click
     TabOrder = 10
+  end
+  object Image1: TImage
+    Left = 88
+    Height = 26
+    Top = 128
+    Width = 210
   end
 end

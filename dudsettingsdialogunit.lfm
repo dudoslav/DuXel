@@ -6,6 +6,7 @@ object DudSettingsDialog: TDudSettingsDialog
   Caption = 'DudSettingsDialog'
   ClientHeight = 240
   ClientWidth = 320
+  Color = 8454143
   LCLVersion = '1.2.2.0'
   object Button1: TButton
     Left = 96
@@ -23,5 +24,14 @@ object DudSettingsDialog: TDudSettingsDialog
     Width = 80
     TabOrder = 1
     Value = 30
+  end
+  object CheckBox1: TCheckBox
+    Left = 200
+    Height = 19
+    Top = 14
+    Width = 77
+    Caption = 'WireFrame'
+    OnClick = CheckBox1Click
+    TabOrder = 2
   end
 end

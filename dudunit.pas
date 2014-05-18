@@ -29,11 +29,13 @@ type
     function getPic(): TPicture;
     procedure setPic(picture : TPicture);
     procedure render(canvas : TCanvas);
+    procedure renderPix(x,y : integer ;canvas: TCanvas);
     destructor Destroy();override;
   end;
 
 var
   pixelA: integer;
+  WireFrame: boolean;
 
 implementation
 
@@ -108,11 +110,19 @@ begin
   for i := 0 to getPicWidth() - 1 do
       for j := 0 to getPicHeight() - 1 do
       begin
-        canvas.pen.color := getPicPixel(i, j);
+        if wireframe then canvas.pen.color := clblack else canvas.pen.color := getPicPixel(i, j);
         canvas.brush.color := getPicPixel(i, j);
         canvas.rectangle(i * pixelA, j * pixelA, i * pixelA +
           pixelA, j * pixelA + pixelA);
       end;
+end;
+
+procedure TDudPic.renderPix(x,y : integer ;canvas: TCanvas);
+begin
+       if wireframe then canvas.pen.color := clblack else canvas.pen.color := getPicPixel(x, y);
+        canvas.brush.color := getPicPixel(x, y);
+        canvas.rectangle(x * pixelA, y * pixelA, x * pixelA +
+          pixelA, y * pixelA + pixelA);
 end;
 
 destructor TDudPic.Destroy();

@@ -178,13 +178,7 @@ begin
       begin
         picture.setPicPixel(x div DudUnit.pixelA + i, y div
           DudUnit.pixelA + j, clwhite);
-        argcanvas.brush.color := clwhite;
-        argcanvas.pen.color := clwhite;
-        argcanvas.rectangle(x div DudUnit.pixelA * DudUnit.pixelA +
-          i * DudUnit.pixelA, y div DudUnit.pixelA * DudUnit.pixelA +
-          j * DudUnit.pixelA, x div DudUnit.pixelA * DudUnit.pixelA +
-          DudUnit.pixelA + i * DudUnit.pixelA, y div DudUnit.pixelA *
-          DudUnit.pixelA + DudUnit.pixelA + j * DudUnit.pixelA);
+        picture.renderPix(x div pixelA +i,y div pixelA + j,argCanvas);
       end;
     end;
 end;
@@ -205,14 +199,7 @@ begin
       begin
         picture.setPicPixel(x div DudUnit.pixelA + i, y div
           DudUnit.pixelA + j, color);
-        argcanvas.brush.color := color;
-        argcanvas.pen.color := color;
-        //argCanvas.Pixels[x div pixelA,y div pixelA] := color;
-        argcanvas.rectangle(x div DudUnit.pixelA * DudUnit.pixelA +
-          i * DudUnit.pixelA, y div DudUnit.pixelA * DudUnit.pixelA +
-          j * DudUnit.pixelA, x div DudUnit.pixelA * DudUnit.pixelA +
-          DudUnit.pixelA + i * DudUnit.pixelA, y div DudUnit.pixelA *
-          DudUnit.pixelA + DudUnit.pixelA + j * DudUnit.pixelA);
+        picture.renderPix(x div pixelA +i,y div pixelA + j,argCanvas);
       end;
     end;
 end;
@@ -251,27 +238,20 @@ begin
   settings.oldX := x;
   settings.oldY := y;
   picture.setPicPixel(x div DudUnit.pixelA, y div DudUnit.pixelA, color);
-  argcanvas.brush.color := color;
-  argcanvas.pen.color := color;
-  argcanvas.rectangle(x div DudUnit.pixelA * DudUnit.pixelA, y div
-    DudUnit.pixelA * DudUnit.pixelA, x div DudUnit.pixelA * DudUnit.pixelA +
-    DudUnit.pixelA, y div DudUnit.pixelA * DudUnit.pixelA +
-    DudUnit.pixelA);
+  picture.renderPix(x div pixelA ,y div pixelA ,argCanvas);
 end;
 
 procedure TPen.OnMouseMove(x, y: integer; var color: TColor;
   argCanvas: TCanvas; var picture: TDudPic);
+{var
+  DeltaX, DeltaY : integer;}
 begin
+  {DeltaX := abs(settings.oldX div pixelA - x div pixelA);
+  DeltaY := abs(settings.oldY div pixelA - y div pixelA);}
+
   picture.getPic().bitmap.canvas.pen.Color := color;
-  picture.getPic().bitmap.canvas.MoveTo(settings.oldX div pixelA,
-    settings.oldY div pixelA);
-  picture.getPic().bitmap.canvas.LineTo(x div pixelA, y div pixelA);
-  settings.oldX := x;
-  settings.oldY := y;
-  argcanvas.rectangle(x div DudUnit.pixelA * DudUnit.pixelA, y div
-    DudUnit.pixelA * DudUnit.pixelA, x div DudUnit.pixelA * DudUnit.pixelA +
-    DudUnit.pixelA, y div DudUnit.pixelA * DudUnit.pixelA +
-    DudUnit.pixelA);
+  picture.setPicPixel(x div pixelA,y div pixelA, color);
+  picture.renderPix(x div pixelA,y div pixelA ,argCanvas);
 end;
 
 {TPen end}
@@ -287,7 +267,11 @@ begin
   DialogManager := TDudDialogManager.Create();
   TextSettings := DialogManager.UseTextDialog();
   picture.getPic().Bitmap.canvas.Font.Size := TextSettings.size;
-  picture.getPic().Bitmap.canvas.TextOut(x div pixelA, y div pixelA, TextSettings.Text);
+  picture.getPic().Bitmap.Canvas.Brush.Style:=bsClear;
+  picture.getPic().Bitmap.Canvas.Brush.Color:=clwhite;
+  picture.getPic().Bitmap.Canvas.Pen.Color:=clBlack;
+  picture.getPic().Bitmap.canvas.TextOut(x div pixelA, y div pixelA-5, TextSettings.Text);
+  picture.getPic().Bitmap.Canvas.Brush.Style:=bsSolid;
   picture.render(argCanvas);
 end;
 
@@ -328,13 +312,7 @@ begin
 
         picture.setPicPixel(x div DudUnit.pixelA + i, y div
           DudUnit.pixelA + j, nowColor);
-        argcanvas.brush.color := nowcolor;
-        argcanvas.pen.color := nowcolor;
-        argcanvas.rectangle(x div DudUnit.pixelA * DudUnit.pixelA +
-          i * DudUnit.pixelA, y div DudUnit.pixelA * DudUnit.pixelA +
-          j * DudUnit.pixelA, x div DudUnit.pixelA * DudUnit.pixelA +
-          DudUnit.pixelA + i * DudUnit.pixelA, y div DudUnit.pixelA *
-          DudUnit.pixelA + DudUnit.pixelA + j * DudUnit.pixelA);
+        picture.renderPix(x div pixelA +i,y div pixelA + j,argCanvas);
       end;
     end;
 end;

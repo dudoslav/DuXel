@@ -6,6 +6,7 @@ object DudTextDialog: TDudTextDialog
   Caption = 'DudTextDialog'
   ClientHeight = 41
   ClientWidth = 398
+  Color = 8454143
   LCLVersion = '1.2.2.0'
   object Edit1: TEdit
     Left = 8

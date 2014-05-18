@@ -9,21 +9,27 @@ object Form1: TForm1
   Caption = 'DuXel'
   ClientHeight = 763
   ClientWidth = 783
-  Color = clBlack
+  Color = 9301997
   Menu = MainMenu1
   OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
+  OnKeyUp = FormKeyUp
+  OnMouseWheelDown = FormMouseWheelDown
+  OnMouseWheelUp = FormMouseWheelUp
   LCLVersion = '1.2.2.0'
   object Image1: TImage
     Left = 0
     Height = 800
-    Top = 0
+    Top = 9
     Width = 800
     OnMouseDown = Image1MouseDown
     OnMouseMove = Image1MouseMove
     OnMouseUp = Image1MouseUp
+    OnMouseWheelDown = Image1MouseWheelDown
+    OnMouseWheelUp = Image1MouseWheelUp
     OnResize = Image1Resize
   end
   object MainMenu1: TMainMenu
@@ -57,7 +63,7 @@ object Form1: TForm1
     left = 64
   end
   object PopupMenu2: TPopupMenu
-    left = 31
+    left = 32
     top = 32
     object TilesViewerMenuItem: TMenuItem
       Caption = 'TilesViewer'

@@ -6,6 +6,7 @@ object DudNewFileDialog: TDudNewFileDialog
   Caption = 'DudNewFileDialog'
   ClientHeight = 98
   ClientWidth = 296
+  Color = 8454143
   LCLVersion = '1.2.2.0'
   object Edit1: TEdit
     Left = 88

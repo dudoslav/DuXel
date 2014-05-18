@@ -23,6 +23,7 @@ type
     function UseTextDialog(): TTextSettings;
     procedure UseDudNoiseDialog(var picture : TDudPic; argCanvas: TCanvas);
     constructor Create();
+    destructor Destroy; override;
   end;
 
 implementation
@@ -70,6 +71,7 @@ var
   SettingsDialog: TDudSettingsDialog;
 begin
   SettingsDialog := TDudSettingsDialog.Create(nil);
+  SettingsDialog.Init();
   SettingsDialog.ShowModal;
   SettingsDialog.Free;
 end;
@@ -105,6 +107,11 @@ begin
   NoiseDialog := TDudNoiseDialog.Create(nil);
   NoiseDialog.Init(picture,argCanvas);
   NoiseDialog.Show;
+end;
+
+destructor TDudDialogManager.Destroy();
+begin
+  TilesViewerDialog.Free;
 end;
 
 end.
