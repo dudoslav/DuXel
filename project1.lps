@@ -4,12 +4,15 @@
     <PathDelim Value="\"/>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="15">
+    <Units Count="18">
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="project1"/>
-        <UsageCount Value="45"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="38" Y="12"/>
+        <UsageCount Value="50"/>
       </Unit0>
       <Unit1>
         <Filename Value="unit1.pas"/>
@@ -18,12 +21,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="55"/>
-        <CursorPos X="34" Y="88"/>
-        <UsageCount Value="45"/>
+        <TopLine Value="163"/>
+        <CursorPos X="31" Y="158"/>
+        <UsageCount Value="50"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -31,22 +33,22 @@
         <Filename Value="dudunit.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DudUnit"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="52"/>
-        <CursorPos X="66" Y="50"/>
-        <UsageCount Value="45"/>
+        <TopLine Value="37"/>
+        <CursorPos X="5" Y="12"/>
+        <UsageCount Value="50"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="duddialogmanagerunit.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DudDialogManagerUnit"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="6"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="38"/>
-        <CursorPos X="26" Y="52"/>
-        <UsageCount Value="45"/>
+        <TopLine Value="69"/>
+        <CursorPos X="19" Y="110"/>
+        <UsageCount Value="50"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -56,11 +58,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="DudNewFileDialogUnit"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="9"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="7"/>
-        <CursorPos X="1" Y="46"/>
-        <UsageCount Value="45"/>
+        <TopLine Value="4"/>
+        <CursorPos X="37" Y="17"/>
+        <UsageCount Value="50"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit4>
@@ -71,11 +73,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="DudToolsUnit"/>
-        <EditorIndex Value="1"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="77"/>
-        <CursorPos X="27" Y="111"/>
-        <UsageCount Value="43"/>
+        <TopLine Value="344"/>
+        <CursorPos X="16" Y="366"/>
+        <UsageCount Value="48"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit5>
@@ -86,11 +89,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="DudSettingsDialogUnit"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="8"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="39" Y="36"/>
-        <UsageCount Value="35"/>
+        <CursorPos X="35" Y="36"/>
+        <UsageCount Value="40"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit6>
@@ -98,11 +101,11 @@
         <Filename Value="dudhistorymanagerunit.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DudHistoryManagerUnit"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="8"/>
+        <TopLine Value="5"/>
         <CursorPos X="42" Y="36"/>
-        <UsageCount Value="26"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
@@ -112,182 +115,220 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="DudTilesViewerDialogUnit"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="7"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="37" Y="13"/>
-        <UsageCount Value="21"/>
+        <CursorPos X="50" Y="29"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit8>
       <Unit9>
+        <Filename Value="dudsettingsunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="DudSettingsUnit"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="57" Y="17"/>
+        <UsageCount Value="25"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="dudtextdialogunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DudTextDialog"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="DudTextDialogUnit"/>
+        <EditorIndex Value="4"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="3"/>
+        <CursorPos X="9" Y="46"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit10>
+      <Unit11>
         <Filename Value="D:\Programs\lazarus\lcl\include\customform.inc"/>
         <WindowIndex Value="0"/>
         <TopLine Value="224"/>
         <CursorPos X="53" Y="245"/>
         <UsageCount Value="9"/>
-      </Unit9>
-      <Unit10>
+      </Unit11>
+      <Unit12>
         <Filename Value="D:\Programs\lazarus\lcl\include\fpimagebitmap.inc"/>
         <WindowIndex Value="0"/>
         <TopLine Value="126"/>
         <CursorPos X="26" Y="142"/>
         <UsageCount Value="9"/>
-      </Unit10>
-      <Unit11>
+      </Unit12>
+      <Unit13>
         <Filename Value="D:\Programs\lazarus\lcl\graphics.pp"/>
         <UnitName Value="Graphics"/>
         <WindowIndex Value="0"/>
         <TopLine Value="988"/>
         <CursorPos X="3" Y="1008"/>
         <UsageCount Value="9"/>
-      </Unit11>
-      <Unit12>
+      </Unit13>
+      <Unit14>
         <Filename Value="D:\Programs\lazarus\lcl\interfaces\win32\win32wsbuttons.pp"/>
         <UnitName Value="Win32WSButtons"/>
         <WindowIndex Value="0"/>
         <TopLine Value="473"/>
         <CursorPos X="1" Y="494"/>
         <UsageCount Value="10"/>
-      </Unit12>
-      <Unit13>
+      </Unit14>
+      <Unit15>
         <Filename Value="D:\Programs\lazarus\lcl\include\picture.inc"/>
         <WindowIndex Value="0"/>
         <TopLine Value="783"/>
         <CursorPos X="1" Y="810"/>
         <UsageCount Value="11"/>
-      </Unit13>
-      <Unit14>
+      </Unit15>
+      <Unit16>
         <Filename Value="D:\Programs\lazarus\lcl\include\control.inc"/>
         <WindowIndex Value="0"/>
         <TopLine Value="619"/>
         <CursorPos X="1" Y="639"/>
         <UsageCount Value="10"/>
-      </Unit14>
+      </Unit16>
+      <Unit17>
+        <Filename Value="dudnoisedialogunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DudNoiseDialog"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="DudNoiseDialogUnit"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="10"/>
+        <CursorPos X="14" Y="23"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit17>
     </Units>
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="dudhistorymanagerunit.pas"/>
-        <Caret Line="39" Column="29" TopLine="3"/>
+        <Filename Value="duddialogmanagerunit.pas"/>
+        <Caret Line="98" Column="18" TopLine="56"/>
       </Position1>
       <Position2>
-        <Filename Value="dudhistorymanagerunit.pas"/>
-        <Caret Line="28" Column="35" TopLine="2"/>
+        <Filename Value="duddialogmanagerunit.pas"/>
+        <Caret Line="96" Column="31" TopLine="56"/>
       </Position2>
       <Position3>
-        <Filename Value="dudhistorymanagerunit.pas"/>
-        <Caret Line="33" Column="35" TopLine="2"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="277" Column="34" TopLine="277"/>
       </Position3>
       <Position4>
-        <Filename Value="dudtoolsunit.pas"/>
-        <Caret Line="201" Column="65" TopLine="148"/>
+        <Filename Value="duddialogmanagerunit.pas"/>
+        <Caret Line="101" Column="19" TopLine="58"/>
       </Position4>
       <Position5>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="170" Column="5" TopLine="138"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="211" Column="43" TopLine="177"/>
       </Position5>
       <Position6>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="169" Column="57" TopLine="138"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="190" Column="35" TopLine="321"/>
       </Position6>
       <Position7>
-        <Filename Value="dudhistorymanagerunit.pas"/>
-        <Caret Line="34" Column="23" TopLine="2"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="189" Column="35" TopLine="189"/>
       </Position7>
       <Position8>
-        <Filename Value="dudhistorymanagerunit.pas"/>
-        <Caret Line="25" Column="109" TopLine="4"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="215" Column="34" TopLine="215"/>
       </Position8>
       <Position9>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="175" Column="1" TopLine="144"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="342" Column="3" TopLine="327"/>
       </Position9>
       <Position10>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="127" Column="27" TopLine="115"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="343" Column="3" TopLine="328"/>
       </Position10>
       <Position11>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="70" Column="59" TopLine="55"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="342" Column="3" TopLine="327"/>
       </Position11>
       <Position12>
-        <Filename Value="dudhistorymanagerunit.pas"/>
-        <Caret Line="45" Column="54" TopLine="9"/>
+        <Filename Value="dudsettingsdialogunit.pas"/>
+        <Caret Line="26" Column="41" TopLine="1"/>
       </Position12>
       <Position13>
-        <Filename Value="dudhistorymanagerunit.pas"/>
-        <Caret Line="44" Column="11" TopLine="11"/>
+        <Filename Value="dudsettingsdialogunit.pas"/>
+        <Caret Line="25" Column="41" TopLine="1"/>
       </Position13>
       <Position14>
-        <Filename Value="dudhistorymanagerunit.pas"/>
-        <Caret Line="52" Column="43" TopLine="14"/>
+        <Filename Value="dudsettingsdialogunit.pas"/>
+        <Caret Line="24" Column="41" TopLine="1"/>
       </Position14>
       <Position15>
-        <Filename Value="dudhistorymanagerunit.pas"/>
-        <Caret Line="51" Column="41" TopLine="17"/>
+        <Filename Value="dudnoisedialogunit.pas"/>
+        <Caret Line="15" Column="19" TopLine="1"/>
       </Position15>
       <Position16>
-        <Filename Value="dudhistorymanagerunit.pas"/>
-        <Caret Line="46" Column="48" TopLine="11"/>
+        <Filename Value="dudnoisedialogunit.pas"/>
+        <Caret Line="20" Column="19" TopLine="1"/>
       </Position16>
       <Position17>
-        <Filename Value="dudtilesviewerdialogunit.pas"/>
-        <Caret Line="13" Column="3" TopLine="1"/>
+        <Filename Value="dudnoisedialogunit.pas"/>
+        <Caret Line="34" Column="3" TopLine="1"/>
       </Position17>
       <Position18>
-        <Filename Value="dudtilesviewerdialogunit.pas"/>
-        <Caret Line="31" Column="15" TopLine="1"/>
+        <Filename Value="dudnoisedialogunit.pas"/>
+        <Caret Line="32" Column="58" TopLine="1"/>
       </Position18>
       <Position19>
-        <Filename Value="dudtilesviewerdialogunit.pas"/>
-        <Caret Line="36" Column="97" TopLine="1"/>
+        <Filename Value="dudnoisedialogunit.pas"/>
+        <Caret Line="21" Column="51" TopLine="1"/>
       </Position19>
       <Position20>
-        <Filename Value="dudsettingsdialogunit.pas"/>
-        <Caret Line="35" Column="39" TopLine="1"/>
+        <Filename Value="dudnoisedialogunit.pas"/>
+        <Caret Line="47" Column="19" TopLine="7"/>
       </Position20>
       <Position21>
-        <Filename Value="duddialogmanagerunit.pas"/>
-        <Caret Line="72" Column="44" TopLine="35"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="130" Column="42" TopLine="123"/>
       </Position21>
       <Position22>
-        <Filename Value="duddialogmanagerunit.pas"/>
-        <Caret Line="67" Column="66" TopLine="36"/>
+        <Filename Value="dudnoisedialogunit.pas"/>
+        <Caret Line="34" Column="77" TopLine="7"/>
       </Position22>
       <Position23>
-        <Filename Value="duddialogmanagerunit.pas"/>
-        <Caret Line="75" Column="56" TopLine="37"/>
+        <Filename Value="dudnoisedialogunit.pas"/>
+        <Caret Line="48" Column="90" TopLine="8"/>
       </Position23>
       <Position24>
         <Filename Value="duddialogmanagerunit.pas"/>
-        <Caret Line="61" Column="47" TopLine="38"/>
+        <Caret Line="72" Column="31" TopLine="69"/>
       </Position24>
       <Position25>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="81" Column="52" TopLine="96"/>
+        <Filename Value="duddialogmanagerunit.pas"/>
+        <Caret Line="8" Column="70" TopLine="1"/>
       </Position25>
       <Position26>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="70" Column="89" TopLine="48"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="131" Column="42" TopLine="124"/>
       </Position26>
       <Position27>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="130" Column="33" TopLine="102"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="280" Column="18" TopLine="257"/>
       </Position27>
       <Position28>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="112" Column="74" TopLine="102"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="310" Column="42" TopLine="290"/>
       </Position28>
       <Position29>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="129" Column="3" TopLine="114"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="366" Column="3" TopLine="351"/>
       </Position29>
       <Position30>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="90" Column="47" TopLine="55"/>
+        <Filename Value="dudtoolsunit.pas"/>
+        <Caret Line="367" Column="25" TopLine="344"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>

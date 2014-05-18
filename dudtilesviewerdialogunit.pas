@@ -35,7 +35,6 @@ implementation
             begin
               image1.canvas.Draw(i*picture.getPicWidth(),j*picture.getPicWidth(),picture.getPic().Bitmap);
             end;
-
   end;
 
 end.

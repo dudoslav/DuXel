@@ -5,7 +5,8 @@ unit DudSettingsDialogUnit;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls, DudUnit;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  Spin, DudUnit;
 
 type
 
@@ -13,8 +14,7 @@ type
 
   TDudSettingsDialog = class(TForm)
     Button1: TButton;
-    CheckBox1: TCheckBox;
-    Edit1: TEdit;
+    SpinEdit1: TSpinEdit;
     procedure Button1Click(Sender: TObject);
   private
     { private declarations }
@@ -33,7 +33,7 @@ implementation
 
 procedure TDudSettingsDialog.Button1Click(Sender: TObject);
 begin
-  DudUnit.pixelA:= strtoint(Edit1.text);
+  DudUnit.pixelA:= SpinEdit1.Value;
 end;
 
 end.

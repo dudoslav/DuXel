@@ -35,7 +35,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="9">
+    <Units Count="12">
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -96,6 +96,26 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="DudTilesViewerDialogUnit"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="dudsettingsunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="DudSettingsUnit"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="dudtextdialogunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DudTextDialog"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="DudTextDialogUnit"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="dudnoisedialogunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DudNoiseDialog"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="DudNoiseDialogUnit"/>
+      </Unit11>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

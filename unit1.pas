@@ -17,7 +17,10 @@ type
     Image1: TImage;
     MainMenu1: TMainMenu;
     FileMenuItem: TMenuItem;
+    TilesViewerMenuItem: TMenuItem;
     SettingsMenuItem: TMenuItem;
+    PopupMenu2: TPopupMenu;
+    ToolsMenuItem: TMenuItem;
     SaveFileMenuItem: TMenuItem;
     OpenFileMenuItem: TMenuItem;
     NewFileMenuItem: TMenuItem;
@@ -35,6 +38,8 @@ type
       Shift: TShiftState; X, Y: integer);
     procedure Image1Resize(Sender: TObject);
     procedure SettingsMenuItemClick(Sender: TObject);
+    procedure TilesViewerMenuItemClick(Sender: TObject);
+    procedure ToolsMenuItemClick(Sender: TObject);
     procedure NewFileMenuItemClick(Sender: TObject);
     procedure OpenFileMenuItemClick(Sender: TObject);
     procedure SaveFileMenuItemClick(Sender: TObject);
@@ -100,6 +105,7 @@ begin
   begin
     mouse.x := x;
     mouse.y := y;
+    Tools.getTool().OnMouseDown(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
     HistoryManager.addLastPicture(obr.getPic().Bitmap);
     timer1.Interval := tools.getTool().settings.Frequecy;
     timer1.Enabled := True;
@@ -121,11 +127,13 @@ begin
   mouse.x := x;
   mouse.y := y;
   timer1.Enabled := False;
+  Tools.getTool().OnMouseUp(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
+  DialogManager.RenderTilesViewerDialog(obr);
 end;
 
 procedure TForm1.Image1Resize(Sender: TObject);
 begin
-  ResizeImage();
+  //ResizeImage();
   if obr <> nil then
     obr.render(image1.canvas);
 end;
@@ -135,6 +143,16 @@ begin
   DialogManager.UseSettingsDialog();
   obr.render(image1.canvas);
   ResizeImage();
+end;
+
+procedure TForm1.TilesViewerMenuItemClick(Sender: TObject);
+begin
+  DialogManager.UseTilesViewerDialog(obr);
+end;
+
+procedure TForm1.ToolsMenuItemClick(Sender: TObject);
+begin
+  PopupMenu2.PopUp();
 end;
 
 procedure TForm1.NewFileMenuItemClick(Sender: TObject);
@@ -162,7 +180,7 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-  tools.getTool().Draw(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
+  tools.getTool().OnMouseMove(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
   tools.ColorButton1.ButtonColor := Tools.getColor();
 end;
 

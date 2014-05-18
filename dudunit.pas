@@ -9,7 +9,10 @@ uses
 
 type
 
-  //TODO: dorob destructor, Ved on nejde!
+  TTextSettings = record
+    text : string;
+    size : integer;
+  end;
 
   TDudPic = class
   private

@@ -1,7 +1,7 @@
 object DudTilesViewerDialog: TDudTilesViewerDialog
-  Left = 1271
+  Left = 1258
   Height = 293
-  Top = 272
+  Top = 79
   Width = 320
   Caption = 'DudTilesViewerDialog'
   ClientHeight = 293

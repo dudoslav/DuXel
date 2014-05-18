@@ -1,14 +1,14 @@
 object Form1: TForm1
-  Left = 469
-  Height = 532
-  Top = 190
-  Width = 512
-  HorzScrollBar.Page = 512
-  VertScrollBar.Page = 512
+  Left = 421
+  Height = 800
+  Top = 77
+  Width = 800
+  HorzScrollBar.Page = 783
+  VertScrollBar.Page = 763
   AutoScroll = True
   Caption = 'DuXel'
-  ClientHeight = 512
-  ClientWidth = 512
+  ClientHeight = 763
+  ClientWidth = 783
   Color = clBlack
   Menu = MainMenu1
   OnClose = FormClose
@@ -18,9 +18,9 @@ object Form1: TForm1
   LCLVersion = '1.2.2.0'
   object Image1: TImage
     Left = 0
-    Height = 512
+    Height = 800
     Top = 0
-    Width = 512
+    Width = 800
     OnMouseDown = Image1MouseDown
     OnMouseMove = Image1MouseMove
     OnMouseUp = Image1MouseUp
@@ -31,9 +31,9 @@ object Form1: TForm1
       Caption = 'File'
       OnClick = FileMenuItemClick
     end
-    object SettingsMenuItem: TMenuItem
-      Caption = 'Settings'
-      OnClick = SettingsMenuItemClick
+    object ToolsMenuItem: TMenuItem
+      Caption = 'Tools'
+      OnClick = ToolsMenuItemClick
     end
   end
   object PopupMenu1: TPopupMenu
@@ -55,5 +55,17 @@ object Form1: TForm1
     Enabled = False
     OnTimer = Timer1Timer
     left = 64
+  end
+  object PopupMenu2: TPopupMenu
+    left = 31
+    top = 32
+    object TilesViewerMenuItem: TMenuItem
+      Caption = 'TilesViewer'
+      OnClick = TilesViewerMenuItemClick
+    end
+    object SettingsMenuItem: TMenuItem
+      Caption = 'Settings'
+      OnClick = SettingsMenuItemClick
+    end
   end
 end

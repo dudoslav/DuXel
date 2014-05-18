@@ -28,7 +28,7 @@ object DudNewFileDialog: TDudNewFileDialog
     Height = 65
     Top = 16
     Width = 67
-    Caption = 'Button1'
+    Caption = 'Create'
     OnClick = Button1Click
     TabOrder = 2
   end

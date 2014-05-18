@@ -9,7 +9,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, Unit1, DudUnit, DudDialogManagerUnit, DudNewFileDialogUnit, 
 DudToolsUnit, DudSettingsDialogUnit, DudHistoryManagerUnit, 
-DudTilesViewerDialogUnit
+DudTilesViewerDialogUnit, DudSettingsUnit, DudTextDialogUnit, DudNoiseDialogUnit
   { you can add units after this };
 
 {$R *.res}
@@ -22,6 +22,8 @@ begin
   Application.CreateForm(TDudTools, DudTools);
   Application.CreateForm(TDudSettingsDialog, DudSettingsDialog);
   Application.CreateForm(TDudTilesViewerDialog, DudTilesViewerDialog);
+  Application.CreateForm(TDudTextDialog, DudTextDialog);
+  Application.CreateForm(TDudNoiseDialog, DudNoiseDialog);
   Application.Run;
 end.
 
