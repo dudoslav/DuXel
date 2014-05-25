@@ -7,12 +7,14 @@ object DudTilesViewerDialog: TDudTilesViewerDialog
   ClientHeight = 273
   ClientWidth = 320
   Menu = MainMenu1
+  OnResize = FormResize
   LCLVersion = '1.2.2.0'
   object Image1: TImage
     Left = 0
     Height = 293
     Top = 0
     Width = 322
+    AutoSize = True
   end
   object MainMenu1: TMainMenu
     object MenuItem1: TMenuItem

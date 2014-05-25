@@ -146,4 +146,22 @@ object DudNoiseDialog: TDudNoiseDialog
     Top = 128
     Width = 210
   end
+  object Button6: TButton
+    Left = 0
+    Height = 25
+    Top = 160
+    Width = 75
+    Caption = 'Peto Random'
+    OnClick = Button6Click
+    TabOrder = 11
+  end
+  object SpinEdit4: TSpinEdit
+    Left = 88
+    Height = 23
+    Top = 160
+    Width = 50
+    MaxValue = 255
+    TabOrder = 12
+    Value = 10
+  end
 end

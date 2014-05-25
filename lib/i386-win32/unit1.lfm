@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 421
+  Left = 476
   Height = 800
-  Top = 77
+  Top = 44
   Width = 800
   HorzScrollBar.Page = 783
   VertScrollBar.Page = 763
@@ -35,43 +35,34 @@ object Form1: TForm1
   object MainMenu1: TMainMenu
     object FileMenuItem: TMenuItem
       Caption = 'File'
-      OnClick = FileMenuItemClick
+      object NewFileMenuItem: TMenuItem
+        Caption = 'New File'
+        OnClick = NewFileMenuItemClick
+      end
+      object OpenFileMenuItem: TMenuItem
+        Caption = 'Open File'
+        OnClick = OpenFileMenuItemClick
+      end
+      object SaveFileMenuItem: TMenuItem
+        Caption = 'Save File'
+        OnClick = SaveFileMenuItemClick
+      end
     end
     object ToolsMenuItem: TMenuItem
       Caption = 'Tools'
-      OnClick = ToolsMenuItemClick
-    end
-  end
-  object PopupMenu1: TPopupMenu
-    left = 32
-    object NewFileMenuItem: TMenuItem
-      Caption = 'New File'
-      OnClick = NewFileMenuItemClick
-    end
-    object OpenFileMenuItem: TMenuItem
-      Caption = 'Open File'
-      OnClick = OpenFileMenuItemClick
-    end
-    object SaveFileMenuItem: TMenuItem
-      Caption = 'Save File'
-      OnClick = SaveFileMenuItemClick
+      object TilesViewerMenuItem: TMenuItem
+        Caption = 'Tiles Viewer'
+        OnClick = TilesViewerMenuItemClick
+      end
+      object SettingsMenuItem: TMenuItem
+        Caption = 'Settings'
+        OnClick = SettingsMenuItemClick
+      end
     end
   end
   object Timer1: TTimer
     Enabled = False
     OnTimer = Timer1Timer
-    left = 64
-  end
-  object PopupMenu2: TPopupMenu
     left = 32
-    top = 32
-    object TilesViewerMenuItem: TMenuItem
-      Caption = 'TilesViewer'
-      OnClick = TilesViewerMenuItemClick
-    end
-    object SettingsMenuItem: TMenuItem
-      Caption = 'Settings'
-      OnClick = SettingsMenuItemClick
-    end
   end
 end

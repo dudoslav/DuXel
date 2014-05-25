@@ -18,6 +18,7 @@ type
     Button3: TButton;
     Button4: TButton;
     Button5: TButton;
+    Button6: TButton;
     Image1: TImage;
     Label1: TLabel;
     Label2: TLabel;
@@ -28,11 +29,13 @@ type
     SpinEdit1: TSpinEdit;
     SpinEdit2: TSpinEdit;
     SpinEdit3: TSpinEdit;
+    SpinEdit4: TSpinEdit;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
     procedure ScrollBar1Change(Sender: TObject);
     procedure ScrollBar2Change(Sender: TObject);
     procedure ScrollBar3Change(Sender: TObject);
@@ -132,6 +135,37 @@ begin
         SpinEdit2.Value - abs((i - (thisPicture.getPicWidth() div 2)) *
         (j - (thisPicture.getPicHeight()) div 2)), SpinEdit3.Value - abs(
         (i - (thisPicture.getPicWidth() div 2)) * (j - (thisPicture.getPicHeight()) div 2)));
+      thisPicture.setPicPixel(i, j, nowColor);
+    end;
+  thisPicture.render(thisCanvas);
+end;
+
+procedure TDudNoiseDialog.Button6Click(Sender: TObject);
+var
+  i, j,Nr,Ng,Nb,Cr,Cg,Cb: integer;
+  nowColor: TColor;
+begin
+  Nr := random(SpinEdit1.Value+1);
+  Ng := random(SpinEdit2.Value+1);
+  Nb := random(SpinEdit3.Value+1);
+
+  for i := 0 to thisPicture.getPicWidth() - 1 do
+    for j := 0 to thisPicture.getPicHeight() - 1 do
+    begin
+      Cr := Nr + random(SpinEdit4.Value)-SpinEdit4.Value div 2;
+      Cg := Ng + random(SpinEdit4.Value)-SpinEdit4.Value div 2;
+      Cb := Nb + random(SpinEdit4.Value)-SpinEdit4.Value div 2;
+
+      if (Cr < 0) then Cr := Cr - Cr;
+      if (Cr > 255) then Cr := Cr - (Cr - 255);
+
+      if (Cr < 0) then Cg := Cg - Cg;
+      if (Cr > 255) then Cg := Cg - (Cg - 255);
+
+      if (Cr < 0) then Cb := Cb - Cb;
+      if (Cr > 255) then Cb := Cb - (Cb - 255);
+
+      nowColor := RGBToColor(Cr,Cg,Cb);
       thisPicture.setPicPixel(i, j, nowColor);
     end;
   thisPicture.render(thisCanvas);

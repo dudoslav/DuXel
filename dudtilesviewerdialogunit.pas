@@ -16,9 +16,10 @@ type
     Image1: TImage;
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
+    procedure FormResize(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
   private
-
+    pic : TDudPic;
   public
     procedure render(picture : TDudPic);
   end;
@@ -42,10 +43,19 @@ begin
   SaveFileDialog.Free;
 end;
 
+procedure TDudTilesViewerDialog.FormResize(Sender: TObject);
+begin
+  image1.Picture.bitmap.SetSize(Width,Height);
+  image1.Width := Width;
+  image1.Height := Height;
+  render(pic);
+end;
+
   procedure TDudTilesViewerDialog.render(picture : TDudPic);
   var
     i,j : integer;
   begin
+    pic := picture;
     for i := 0 to (image1.Width div picture.getPicWidth()) do
         for j := 0 to (image1.Height div picture.getPicHeight()) do
             begin

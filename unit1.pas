@@ -11,6 +11,11 @@ uses
 
 type
 
+  TMouse = record
+    x,y : integer;
+    shift: TShiftState;
+  end;
+
   { TForm1 }
 
   TForm1 = class(TForm)
@@ -19,17 +24,14 @@ type
     FileMenuItem: TMenuItem;
     TilesViewerMenuItem: TMenuItem;
     SettingsMenuItem: TMenuItem;
-    PopupMenu2: TPopupMenu;
-    ToolsMenuItem: TMenuItem;
+    NewFileMenuItem: TMenuItem;
     SaveFileMenuItem: TMenuItem;
     OpenFileMenuItem: TMenuItem;
-    NewFileMenuItem: TMenuItem;
-    PopupMenu1: TPopupMenu;
+    ToolsMenuItem: TMenuItem;
     Timer1: TTimer;
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
     procedure FormCreate(Sender: TObject);
-    procedure FileMenuItemClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: word; Shift: TShiftState);
     procedure FormKeyUp(Sender: TObject; var Key: word; Shift: TShiftState);
@@ -49,7 +51,6 @@ type
     procedure Image1Resize(Sender: TObject);
     procedure SettingsMenuItemClick(Sender: TObject);
     procedure TilesViewerMenuItemClick(Sender: TObject);
-    procedure ToolsMenuItemClick(Sender: TObject);
     procedure NewFileMenuItemClick(Sender: TObject);
     procedure OpenFileMenuItemClick(Sender: TObject);
     procedure SaveFileMenuItemClick(Sender: TObject);
@@ -60,7 +61,7 @@ type
     DialogManager: TDudDialogManager;
     HistoryManager: TDudHistoryManager;
     Tools: TDudTools;
-    Mouse: TPoint;
+    Mouse: TMouse;
     procedure ResizeImage();
   public
 
@@ -101,19 +102,26 @@ begin
   Tools := TDudTools.Create(nil);
 end;
 
-procedure TForm1.FileMenuItemClick(Sender: TObject);
-begin
-  PopupMenu1.PopUp;
-end;
-
 procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
 begin
   if (shift = [ssleft]) and (obr <> nil) then
   begin
+    mouse.shift:= shift;
     mouse.x := x;
     mouse.y := y;
-    Tools.getTool().OnMouseDown(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
+    Tools.getTool().OnMouseDown(mouse.x, mouse.y, tools.useColor1, image1.canvas, obr);
+    HistoryManager.addLastPicture(obr.getPic().Bitmap);
+    timer1.Interval := tools.getTool().settings.Frequecy;
+    timer1.Enabled := True;
+  end;
+
+  if (shift = [ssright])and (obr <> nil) then
+  begin
+    mouse.shift:= shift;
+    mouse.x := x;
+    mouse.y := y;
+    Tools.getTool().OnMouseDown(mouse.x, mouse.y, tools.useColor2, image1.canvas, obr);
     HistoryManager.addLastPicture(obr.getPic().Bitmap);
     timer1.Interval := tools.getTool().settings.Frequecy;
     timer1.Enabled := True;
@@ -124,9 +132,19 @@ procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: inte
 begin
   if (shift = [ssleft]) and (obr <> nil) then
   begin
+    mouse.shift:= shift;
     mouse.x := x;
     mouse.y := y;
-    Tools.getTool().OnMouseMove(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
+    Tools.getTool().OnMouseMove(mouse.x, mouse.y, tools.useColor1, image1.canvas, obr);
+    //DialogManager.RenderTilesViewerDialog(obr);
+  end;
+
+  if (shift = [ssright]) and (obr <> nil) then
+  begin
+    mouse.shift:= shift;
+    mouse.x := x;
+    mouse.y := y;
+    Tools.getTool().OnMouseMove(mouse.x, mouse.y, tools.useColor2, image1.canvas, obr);
     //DialogManager.RenderTilesViewerDialog(obr);
   end;
 end;
@@ -134,12 +152,21 @@ end;
 procedure TForm1.Image1MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
 begin
-  if obr <> nil then
+  if (mouse.shift = [ssleft]) and (obr <> nil) then
   begin
     mouse.x := x;
     mouse.y := y;
     timer1.Enabled := False;
-    Tools.getTool().OnMouseUp(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
+    Tools.getTool().OnMouseUp(mouse.x, mouse.y, tools.useColor1, image1.canvas, obr);
+    DialogManager.RenderTilesViewerDialog(obr);
+  end;
+
+  if (mouse.shift = [ssright]) and (obr <> nil) then
+  begin
+    mouse.x := x;
+    mouse.y := y;
+    timer1.Enabled := False;
+    Tools.getTool().OnMouseUp(mouse.x, mouse.y, tools.useColor2, image1.canvas, obr);
     DialogManager.RenderTilesViewerDialog(obr);
   end;
 end;
@@ -201,11 +228,6 @@ begin
     ShowMessage('there is no image to tile');
 end;
 
-procedure TForm1.ToolsMenuItemClick(Sender: TObject);
-begin
-  PopupMenu2.PopUp();
-end;
-
 procedure TForm1.NewFileMenuItemClick(Sender: TObject);
 begin
   obr := DialogManager.UseNewFileDialog();
@@ -237,8 +259,17 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-  tools.getTool().onTimerDo(mouse.x, mouse.y, tools.useColor, image1.canvas, obr);
-  tools.ColorButton1.ButtonColor := Tools.getColor();
+  if (mouse.shift = [ssleft]) and (obr <> nil) then
+  begin
+    Tools.getTool().onTimerDo(mouse.x, mouse.y, tools.useColor1, image1.canvas, obr);
+    tools.ColorButton1.ButtonColor := Tools.useColor1;
+  end;
+
+  if (mouse.shift = [ssright]) and (obr <> nil) then
+  begin
+    Tools.getTool().onTimerDo(mouse.x, mouse.y, tools.useColor2, image1.canvas, obr);
+    tools.ColorButton2.ButtonColor := Tools.useColor2;
+  end;
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
@@ -257,6 +288,22 @@ begin
     obr.getPic().Bitmap := HistoryManager.getLastPicture();
     obr.render(image1.canvas);
   end;
+
+  if (keys[VK_B]) and (keys[VK_CONTROL]) and (obr <> nil) then
+  begin
+    Tools.setTool(BRUSH_TOOL);
+  end;
+
+  if (keys[VK_R]) and (keys[VK_CONTROL]) and (obr <> nil) then
+  begin
+    Tools.setTool(RECTANGLE_TOOL);
+  end;
+
+  if (keys[VK_E]) and (keys[VK_CONTROL]) and (obr <> nil) then
+  begin
+    Tools.setTool(ERASER_TOOL);
+  end;
+
 end;
 
 procedure TForm1.FormKeyUp(Sender: TObject; var Key: word; Shift: TShiftState);
