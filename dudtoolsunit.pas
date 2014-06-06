@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
-  Buttons, StdCtrls, Spin, Math, DudUnit, DudDialogManagerUnit;
+  Buttons, StdCtrls, Spin, Math, DudUnit, DudDialogManagerUnit, Clipbrd;
 
 type
 
@@ -120,6 +120,8 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
     SpinEdit1: TSpinEdit;
     SpinEdit2: TSpinEdit;
     SpinEdit3: TSpinEdit;
@@ -146,7 +148,7 @@ type
     useTool: integer;
   public
     useColor1, useColor2: TColor;
-    tools: array [0..9] of TTool;
+    tools: array [0..10] of TTool;
     function getTool(): TTool;
     procedure setTool(num : integer);
   end;
@@ -470,11 +472,6 @@ begin
   useTool := 0;
 end;
 
-procedure TDudTools.BitBtn10Click(Sender: TObject);
-begin
- useTool := 9;
-end;
-
 procedure TDudTools.BitBtn2Click(Sender: TObject);
 begin
   useTool := 1;
@@ -515,6 +512,11 @@ begin
   useTool := 8;
 end;
 
+procedure TDudTools.BitBtn10Click(Sender: TObject);
+begin
+ useTool := 9;
+end;
+
 procedure TDudTools.ColorButton1ColorChanged(Sender: TObject);
 begin
   useColor1 := ColorButton1.ButtonColor;
@@ -543,7 +545,6 @@ begin
   SpeedButton2.Destroy;
   SpeedButton3.Destroy;}
 end;
-
 
 {TDudTools end}
 

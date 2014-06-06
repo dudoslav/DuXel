@@ -19,6 +19,7 @@ type
     Button4: TButton;
     Button5: TButton;
     Button6: TButton;
+    Button7: TButton;
     Image1: TImage;
     Label1: TLabel;
     Label2: TLabel;
@@ -30,12 +31,15 @@ type
     SpinEdit2: TSpinEdit;
     SpinEdit3: TSpinEdit;
     SpinEdit4: TSpinEdit;
+    SpinEdit5: TSpinEdit;
+    SpinEdit6: TSpinEdit;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
     procedure ScrollBar1Change(Sender: TObject);
     procedure ScrollBar2Change(Sender: TObject);
     procedure ScrollBar3Change(Sender: TObject);
@@ -109,15 +113,18 @@ end;
 
 procedure TDudNoiseDialog.Button4Click(Sender: TObject);
 var
-  i, j: integer;
+  i, j, n, p: integer;
   nowColor: TColor;
 begin
   for i := 0 to thisPicture.getPicWidth() - 1 do
     for j := 0 to thisPicture.getPicHeight() - 1 do
     begin
+      n := random(thisPicture.getPicWidth());
+      p := random(thisPicture.getPicHeight());
+
       nowColor := RGBtoColor(i * j mod (SpinEdit1.Value + 1), i *
         j mod (SpinEdit2.Value + 1), i * j mod (SpinEdit3.Value + 1));
-      thisPicture.setPicPixel(i, j, nowColor);
+      thisPicture.setPicPixel(n, p, nowColor);
     end;
   thisPicture.render(thisCanvas);
 end;
@@ -145,9 +152,9 @@ var
   i, j,Nr,Ng,Nb,Cr,Cg,Cb: integer;
   nowColor: TColor;
 begin
-  Nr := random(SpinEdit1.Value+1);
-  Ng := random(SpinEdit2.Value+1);
-  Nb := random(SpinEdit3.Value+1);
+  Nr := SpinEdit1.Value;
+  Ng := SpinEdit2.Value;
+  Nb := SpinEdit3.Value;
 
   for i := 0 to thisPicture.getPicWidth() - 1 do
     for j := 0 to thisPicture.getPicHeight() - 1 do
@@ -169,6 +176,32 @@ begin
       thisPicture.setPicPixel(i, j, nowColor);
     end;
   thisPicture.render(thisCanvas);
+end;
+
+procedure TDudNoiseDialog.Button7Click(Sender: TObject);
+var
+  i,j,x,y,k,p : integer;
+  nowColor,startColor : TColor;
+begin
+  startColor := RGBToColor(SpinEdit1.Value,SpinEdit2.Value,SpinEdit3.Value);
+  for i := 1 to SpinEdit5.Value do
+      begin
+      x := random(thisPicture.getPicWidth());
+      y := random(thisPicture.getPicHeight());
+      for j := -SpinEdit6.Value to SpinEdit6.Value do
+        for k := -SpinEdit6.Value to SpinEdit6.Value do
+          if(sqrt(sqr(j)+sqr(k)) <= SpinEdit6.Value) then
+            if(random(11) > 6) then
+              begin
+                p := random(256);
+                //nowColor := RGBtoColor((SpinEdit1.Value div 255)*p,(SpinEdit2.Value div 255)*p,(SpinEdit3.Value div 255)*p);
+                nowColor := RGBtoColor(p,p,p);
+                if(thisPicture.getPicPixel(x+j,y+k)-nowColor < clblack) then thisPicture.setPicPixel(x+j,y+k,clblack)
+                else thisPicture.setPicPixel(x+j,y+k,thisPicture.getPicPixel(x+j,y+k)-nowColor);
+              end;
+      end;
+  thisPicture.render(thisCanvas);
+
 end;
 
 

@@ -164,4 +164,30 @@ object DudNoiseDialog: TDudNoiseDialog
     TabOrder = 12
     Value = 10
   end
+  object Button7: TButton
+    Left = 0
+    Height = 25
+    Top = 192
+    Width = 115
+    Caption = 'Dud Simplex Noise'
+    OnClick = Button7Click
+    TabOrder = 13
+  end
+  object SpinEdit5: TSpinEdit
+    Left = 127
+    Height = 23
+    Top = 192
+    Width = 50
+    TabOrder = 14
+    Value = 10
+  end
+  object SpinEdit6: TSpinEdit
+    Left = 184
+    Height = 23
+    Top = 192
+    Width = 50
+    MinValue = 3
+    TabOrder = 15
+    Value = 3
+  end
 end

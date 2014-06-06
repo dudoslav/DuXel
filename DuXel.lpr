@@ -15,7 +15,6 @@ DudTilesViewerDialogUnit, DudSettingsUnit, DudTextDialogUnit, DudNoiseDialogUnit
 {$R *.res}
 
 begin
-  Application.Title:='DuXel';
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);

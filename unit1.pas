@@ -12,7 +12,7 @@ uses
 type
 
   TMouse = record
-    x,y : integer;
+    x, y: integer;
     shift: TShiftState;
   end;
 
@@ -22,6 +22,7 @@ type
     Image1: TImage;
     MainMenu1: TMainMenu;
     FileMenuItem: TMenuItem;
+    SaveCurrentCanvasManuItem: TMenuItem;
     TilesViewerMenuItem: TMenuItem;
     SettingsMenuItem: TMenuItem;
     NewFileMenuItem: TMenuItem;
@@ -36,19 +37,20 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: word; Shift: TShiftState);
     procedure FormKeyUp(Sender: TObject; var Key: word; Shift: TShiftState);
     procedure FormMouseWheelDown(Sender: TObject; Shift: TShiftState;
-      MousePos: TPoint; var Handled: Boolean);
+      MousePos: TPoint; var Handled: boolean);
     procedure FormMouseWheelUp(Sender: TObject; Shift: TShiftState;
-      MousePos: TPoint; var Handled: Boolean);
+      MousePos: TPoint; var Handled: boolean);
     procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: integer);
     procedure Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
     procedure Image1MouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: integer);
     procedure Image1MouseWheelDown(Sender: TObject; Shift: TShiftState;
-      MousePos: TPoint; var Handled: Boolean);
+      MousePos: TPoint; var Handled: boolean);
     procedure Image1MouseWheelUp(Sender: TObject; Shift: TShiftState;
-      MousePos: TPoint; var Handled: Boolean);
+      MousePos: TPoint; var Handled: boolean);
     procedure Image1Resize(Sender: TObject);
+    procedure SaveCurrentCanvasManuItemClick(Sender: TObject);
     procedure SettingsMenuItemClick(Sender: TObject);
     procedure TilesViewerMenuItemClick(Sender: TObject);
     procedure NewFileMenuItemClick(Sender: TObject);
@@ -100,6 +102,8 @@ begin
   DialogManager := TDudDialogManager.Create;
   HistoryManager := TDudHistoryManager.Create;
   Tools := TDudTools.Create(nil);
+
+  //writeln('ide');
 end;
 
 procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
@@ -107,22 +111,22 @@ procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
 begin
   if (shift = [ssleft]) and (obr <> nil) then
   begin
-    mouse.shift:= shift;
+    HistoryManager.addLastPastPicture(obr.getPic().Bitmap);
+    mouse.shift := shift;
     mouse.x := x;
     mouse.y := y;
     Tools.getTool().OnMouseDown(mouse.x, mouse.y, tools.useColor1, image1.canvas, obr);
-    HistoryManager.addLastPicture(obr.getPic().Bitmap);
     timer1.Interval := tools.getTool().settings.Frequecy;
     timer1.Enabled := True;
   end;
 
-  if (shift = [ssright])and (obr <> nil) then
+  if (shift = [ssright]) and (obr <> nil) then
   begin
-    mouse.shift:= shift;
+    HistoryManager.addLastPastPicture(obr.getPic().Bitmap);
+    mouse.shift := shift;
     mouse.x := x;
     mouse.y := y;
     Tools.getTool().OnMouseDown(mouse.x, mouse.y, tools.useColor2, image1.canvas, obr);
-    HistoryManager.addLastPicture(obr.getPic().Bitmap);
     timer1.Interval := tools.getTool().settings.Frequecy;
     timer1.Enabled := True;
   end;
@@ -130,9 +134,12 @@ end;
 
 procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
 begin
+  Tools.Label5.Caption := 'x : ' + IntToStr(x div pixelA);
+  Tools.Label6.Caption := 'y : ' + IntToStr(y div pixelA);
+
   if (shift = [ssleft]) and (obr <> nil) then
   begin
-    mouse.shift:= shift;
+    mouse.shift := shift;
     mouse.x := x;
     mouse.y := y;
     Tools.getTool().OnMouseMove(mouse.x, mouse.y, tools.useColor1, image1.canvas, obr);
@@ -141,7 +148,7 @@ begin
 
   if (shift = [ssright]) and (obr <> nil) then
   begin
-    mouse.shift:= shift;
+    mouse.shift := shift;
     mouse.x := x;
     mouse.y := y;
     Tools.getTool().OnMouseMove(mouse.x, mouse.y, tools.useColor2, image1.canvas, obr);
@@ -172,34 +179,36 @@ begin
 end;
 
 procedure TForm1.Image1MouseWheelDown(Sender: TObject; Shift: TShiftState;
-  MousePos: TPoint; var Handled: Boolean);
+  MousePos: TPoint; var Handled: boolean);
 begin
   if keys[VK_CONTROL] then
   begin
     if (pixelA > 2) and (obr <> nil) then
     begin
-    pixelA := pixelA - 1;
-    ResizeImage();
-    obr.render(image1.canvas);
+      pixelA := pixelA - 1;
+      ResizeImage();
+      obr.render(image1.canvas);
     end;
-  end else VertScrollBar.Position:= VertScrollBar.Position+VertScrollBar.Range div 20;
+  end
+  else
+    VertScrollBar.Position := VertScrollBar.Position + VertScrollBar.Range div 20;
 
 end;
 
 procedure TForm1.Image1MouseWheelUp(Sender: TObject; Shift: TShiftState;
-  MousePos: TPoint; var Handled: Boolean);
+  MousePos: TPoint; var Handled: boolean);
 begin
   if keys[VK_CONTROL] then
   begin
     if (obr <> nil) then
     begin
-    pixelA := pixelA + 1;
-    ResizeImage();
-    obr.render(image1.canvas);
+      pixelA := pixelA + 1;
+      ResizeImage();
+      obr.render(image1.canvas);
     end;
   end
-  else VertScrollBar.Position:= VertScrollBar.Position-VertScrollBar.Range div 20;
-
+  else
+    VertScrollBar.Position := VertScrollBar.Position - VertScrollBar.Range div 20;
 
 end;
 
@@ -208,6 +217,19 @@ begin
   //ResizeImage();
   if obr <> nil then
     obr.render(image1.canvas);
+end;
+
+procedure TForm1.SaveCurrentCanvasManuItemClick(Sender: TObject);
+var
+  nowDudPic: TDudPic;
+begin
+  if obr <> nil then
+  begin
+    nowDudPic := TDudPic.Create(image1.Picture.Bitmap.Width,
+      image1.Picture.Bitmap.Height);
+    nowDudPic.setPic(image1.Picture);
+    DialogManager.UseSaveFileDialog(nowDudPic);
+  end;
 end;
 
 procedure TForm1.SettingsMenuItemClick(Sender: TObject);
@@ -236,7 +258,7 @@ begin
     obr.render(image1.canvas);
     ResizeImage();
     Tools.Show;
-    HistoryManager.addLastPicture(obr.getPic().Bitmap);
+    HistoryManager.addLastPastPicture(obr.getPic().Bitmap);
   end;
 end;
 
@@ -248,7 +270,7 @@ begin
     obr.render(image1.canvas);
     ResizeImage();
     Tools.Show;
-    HistoryManager.addLastPicture(obr.getPic().Bitmap);
+    HistoryManager.addLastPastPicture(obr.getPic().Bitmap);
   end;
 end;
 
@@ -285,7 +307,13 @@ begin
 
   if (keys[VK_Z]) and (keys[VK_CONTROL]) and (obr <> nil) then
   begin
-    obr.getPic().Bitmap := HistoryManager.getLastPicture();
+    obr.getPic().Bitmap := HistoryManager.getLastPastPicture(obr.getPic().Bitmap);
+    obr.render(image1.canvas);
+  end;
+
+  if (keys[VK_Y]) and (keys[VK_CONTROL]) and (obr <> nil) then
+  begin
+    obr.getPic().Bitmap := HistoryManager.getLastFuturePicture(obr.getPic().Bitmap);
     obr.render(image1.canvas);
   end;
 
@@ -312,32 +340,36 @@ begin
 end;
 
 procedure TForm1.FormMouseWheelDown(Sender: TObject; Shift: TShiftState;
-  MousePos: TPoint; var Handled: Boolean);
+  MousePos: TPoint; var Handled: boolean);
 begin
   if keys[VK_CONTROL] then
   begin
     if (pixelA > 2) and (obr <> nil) then
     begin
-    pixelA := pixelA - 1;
-    ResizeImage();
-    obr.render(image1.canvas);
+      pixelA := pixelA - 1;
+      ResizeImage();
+      obr.render(image1.canvas);
     end;
-  end else VertScrollBar.Position:= VertScrollBar.Position+VertScrollBar.Range div 20;
+  end
+  else
+    VertScrollBar.Position := VertScrollBar.Position + VertScrollBar.Range div 20;
 
 end;
 
 procedure TForm1.FormMouseWheelUp(Sender: TObject; Shift: TShiftState;
-  MousePos: TPoint; var Handled: Boolean);
+  MousePos: TPoint; var Handled: boolean);
 begin
   if keys[VK_CONTROL] then
   begin
     if (obr <> nil) then
     begin
-    pixelA := pixelA + 1;
-    ResizeImage();
-    obr.render(image1.canvas);
+      pixelA := pixelA + 1;
+      ResizeImage();
+      obr.render(image1.canvas);
     end;
-  end else VertScrollBar.Position:= VertScrollBar.Position-VertScrollBar.Range div 20;
+  end
+  else
+    VertScrollBar.Position := VertScrollBar.Position - VertScrollBar.Range div 20;
 
 end;
 
