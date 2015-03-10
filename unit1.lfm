@@ -3,12 +3,12 @@ object Form1: TForm1
   Height = 800
   Top = 44
   Width = 800
-  HorzScrollBar.Page = 783
-  VertScrollBar.Page = 763
+  HorzScrollBar.Page = 785
+  VertScrollBar.Page = 754
   AutoScroll = True
   Caption = 'DuXel'
-  ClientHeight = 763
-  ClientWidth = 783
+  ClientHeight = 754
+  ClientWidth = 785
   Color = 9301997
   Menu = MainMenu1
   OnClose = FormClose
@@ -19,7 +19,7 @@ object Form1: TForm1
   OnKeyUp = FormKeyUp
   OnMouseWheelDown = FormMouseWheelDown
   OnMouseWheelUp = FormMouseWheelUp
-  LCLVersion = '1.2.2.0'
+  LCLVersion = '1.2.6.0'
   object Image1: TImage
     Left = 0
     Height = 800
@@ -31,6 +31,14 @@ object Form1: TForm1
     OnMouseWheelDown = Image1MouseWheelDown
     OnMouseWheelUp = Image1MouseWheelUp
     OnResize = Image1Resize
+  end
+  object Label1: TLabel
+    Left = 168
+    Height = 21
+    Top = 0
+    Width = 43
+    Caption = 'Label1'
+    ParentColor = False
   end
   object MainMenu1: TMainMenu
     object FileMenuItem: TMenuItem
