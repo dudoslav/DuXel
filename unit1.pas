@@ -5,9 +5,9 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, LCLType, Controls, Graphics,
-  Dialogs, Menus, DudUnit,
-  ExtCtrls, DudDialogManagerUnit, DudToolsUnit, DudHistoryManagerUnit, types;
+  Classes, SysUtils, FileUtil, Forms, LCLType, Controls, Graphics, Dialogs,
+  Menus, DudUnit, ExtCtrls, StdCtrls, DudDialogManagerUnit, DudToolsUnit,
+  DudHistoryManagerUnit, types;
 
 type
 
@@ -20,6 +20,7 @@ type
 
   TForm1 = class(TForm)
     Image1: TImage;
+    Label1: TLabel;
     MainMenu1: TMainMenu;
     FileMenuItem: TMenuItem;
     SaveCurrentCanvasManuItem: TMenuItem;
@@ -79,8 +80,6 @@ implementation
 { TForm1 }
 
 procedure TForm1.ResizeImage();
-var
-  i, j: integer;
 begin
   if (obr <> nil) then
   begin
@@ -102,7 +101,7 @@ begin
   DialogManager := TDudDialogManager.Create;
   HistoryManager := TDudHistoryManager.Create;
   Tools := TDudTools.Create(nil);
-
+  Label1.Caption := IntToStr(pixelA);
   //writeln('ide');
 end;
 
